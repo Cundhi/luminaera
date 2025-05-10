@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luminaera - Launching Soon!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        #countdown {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #333;
+        }
+        .contact {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Luminaera - Launching Soon!</h1>
+    <p>Innovative Digital Solutions for a Sustainable Future.</p>
+    <p>Get ready for groundbreaking tools in AI navigation, collaboration, family gaming, and sustainable manufacturing. Stay tuned!</p>
+    <div id="countdown"></div>
+    <div class="contact">
+        <p>Contact us: <a href="mailto:you@newdomain.com">you@newdomain.com</a></p>
+    </div>
+
+    <script>
+        // 设置倒计时目标日期（2025年11月10日）
+        const launchDate = new Date("2025-11-10T00:00:00").getTime();
+        const countdownElement = document.getElementById("countdown");
+
+        const updateCountdown = () => {
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                countdownElement.innerHTML = "We are live!";
+            }
+        };
+
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
