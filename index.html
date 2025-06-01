@@ -4,12 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luminaera - Launching Soon!</title>
+    <link rel="icon" type="image/x-icon" href="/favicon-32x32.ico" sizes="32x32">
+    <link rel="apple-touch-icon" href="/favicon-128x128.ico" sizes="128x128">
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 50px;
             background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 800px;
+            width: 100%;
+        }
+        .logo {
+            margin-right: 20px;
+        }
+        .content {
+            text-align: left;
         }
         h1 {
             color: #333;
@@ -17,12 +37,17 @@
         p {
             color: #666;
             max-width: 600px;
-            margin: 0 auto;
+            margin: 0;
         }
         #countdown {
             font-size: 24px;
-            margin: 20px 0;
+            margin: 10px 0;
             color: #333;
+        }
+        #current-time {
+            font-size: 18px;
+            color: #555;
+            margin: 10px 0;
         }
         .contact {
             margin-top: 20px;
@@ -30,18 +55,26 @@
     </style>
 </head>
 <body>
-    <h1>Luminaera - Launching Soon!</h1>
-    <p>Innovative Digital Solutions for a Sustainable Future.</p>
-    <p>Get ready for groundbreaking tools in AI navigation, collaboration, family gaming, and sustainable manufacturing. Stay tuned!</p>
-    <div id="countdown"></div>
-    <div class="contact">
-        <p>Contact us: <a href="mailto:info@luminaera.tech">info@luminaera.tech</a></p>
+    <div class="container">
+        <div class="logo">
+            <img src="/logo.png" alt="Luminaera Logo" width="150" height="150">
+        </div>
+        <div class="content">
+            <h1>Luminaera - Launching Soon!</h1>
+            <p>Innovative Digital Solutions for a Sustainable Future.</p>
+            <p>Get ready for groundbreaking tools in AI navigation, collaboration, family gaming, and sustainable manufacturing. Stay tuned!</p>
+            <div id="countdown"></div>
+            <div id="current-time"></div>
+            <div class="contact">
+                <p>Contact us: <a href="mailto:info@luminaera.tech">info@luminaera.tech</a></p>
+            </div>
+        </div>
     </div>
 
     <script>
-        // 设置倒计时目标日期（2025年11月10日）
         const launchDate = new Date("2025-11-10T00:00:00").getTime();
         const countdownElement = document.getElementById("countdown");
+        const currentTimeElement = document.getElementById("current-time");
 
         const updateCountdown = () => {
             const now = new Date().getTime();
@@ -52,12 +85,26 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            countdownElement.innerHTML = `Launching in ${days}d ${hours}h ${minutes}m ${seconds}s (Target: 2025-11-10)`;
 
             if (distance < 0) {
                 clearInterval(countdownInterval);
                 countdownElement.innerHTML = "We are live!";
             }
+
+            const currentDate = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: '2-digit', 
+                day: '2-digit', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit', 
+                hour12: false, 
+                timeZone: 'America/Los_Angeles' 
+            };
+            const formattedDate = new Intl.DateTimeFormat('en-US', options).format(currentDate);
+            currentTimeElement.innerHTML = `Current Time: ${formattedDate} PDT`;
         };
 
         const countdownInterval = setInterval(updateCountdown, 1000);
