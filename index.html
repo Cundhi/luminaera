@@ -165,6 +165,27 @@
         @media (max-width: 768px) {
             .philo-left, .philo-right { align-self: center; max-width: 90%; }
         }
+        .edge-link {
+            position: relative;
+            display: inline-block;
+        }
+        .edge-link:hover::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: -40px;
+            transform: translateX(-50%);
+            width: 32px;
+            height: 32px;
+            background: url('./edge-icon.png') no-repeat center;
+            background-size: contain;
+            pointer-events: none;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; top: -50px; }
+            to { opacity: 1; top: -40px; }
+        }
     </style>
 </head>
 <body onload="generateRain()">
@@ -174,7 +195,10 @@
 
         <div class="three-column">
             <div class="column logo">
-                <img src="./logo.png" alt="Luminaera Logo">
+                <picture>
+                    <source srcset="./logo.svg" type="image/svg+xml">
+                    <img src="./logo.png" alt="Luminaera Logo">
+                </picture>
             </div>
             <div class="column">
                 <p>Something meaningful is coming…</p>
@@ -183,8 +207,30 @@
             </div>
             <div class="column logo" id="threadjumper-column">
                 <p style="margin-top: 20px;">ThreadJumper — Now Available</p>
-                <img src="./threadjumper-logo.png" alt="ThreadJumper Logo">
-                <p><a href="https://microsoftedge.microsoft.com/addons/detail/luminaera-threadjumper/alkmhaijoeamonhhlclinclopbpaaggp" style="color:#333; font-weight:bold;">Discover →</a></p>
+                <picture>
+                    <source srcset="./threadjumper-logo.svg" type="image/svg+xml">
+                    <img src="./threadjumper-logo.png" alt="ThreadJumper Logo">
+                </picture>
+                <div style="margin-top: 15px;">
+                    <a href="javascript:void(0)" id="discover-link" style="color:#333; font-weight:bold;">
+                        Discover <span id="arrow">▼</span>
+                    </a>
+                    <div id="store-list" style="display:none; margin-top: 10px; text-align:center;">
+                        <p>
+                            <a href="https://microsoftedge.microsoft.com/addons/detail/luminaera-threadjumper/alkmhaijoeamonhhlclinclopbpaaggp" target="_blank" style="display:inline-flex; align-items:center; gap:8px;color:#333;" id="edge-store-link">
+                                <img src="./edge-icon.png" alt="Edge" style="width:20px; height:20px;" id="edge-icon">
+                                Get it on Microsoft Edge
+                            </a>
+                        </p>
+                        <p>
+                            <a href="https://threadjumper.luminaera.tech" target="_blank" style="display:inline-flex; align-items:center; gap:8px;color:#333;">
+                                <img src="./gumroad-icon.ico" alt="Gumroad"  style="width:20px; height:20px;">
+                                Buy Activation Key (Gumroad)
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                <!--<p><a href="https://microsoftedge.microsoft.com/addons/detail/luminaera-threadjumper/alkmhaijoeamonhhlclinclopbpaaggp" style="color:#333; font-weight:bold;">Discover →</a></p>-->
             </div>
         </div>
 
@@ -273,7 +319,7 @@
 
                 <details class="philo-right">
                     <summary>
-                        <strong>Serious Where It Matters</strong>
+                        <strong>Monks in the Core, Jesters on the <a href="https://microsoftedge.microsoft.com/addons/detail/luminaera-threadjumper/alkmhaijoeamonhhlclinclopbpaaggp" class="edge-link" target="_blank" style="color:#333;">Edge</a></strong>
                         <span>
                             Life is too fragile for constant tension.<br>
                             We keep the core monastic — unflinching, austere, unbreakable.<br>
@@ -386,6 +432,31 @@
         setInterval(updateCurrentTime, 1000);
         updateCurrentTime();
 
+        document.getElementById("discover-link").addEventListener("click", function(e) {
+            e.preventDefault();
+            const list = document.getElementById("store-list");
+            const arrow = document.getElementById("arrow");
+            if (list.style.display === "none" || list.style.display === "") {
+                list.style.display = "block";
+                arrow.textContent = "▲";
+            } else {
+                list.style.display = "none";
+                arrow.textContent = "▼";
+            }
+        });
+
+        // 检测是否 Edge 浏览器，若是则高亮 Edge 链接
+        function isEdgeBrowser() {
+            return navigator.userAgent.indexOf("Edg/") > -1;
+        }
+
+        if (isEdgeBrowser()) {
+            document.getElementById("edge-icon").style.width = "32px";
+            document.getElementById("edge-icon").style.height = "32px";
+            document.getElementById("edge-store-link").style.fontWeight = "bold";
+            document.getElementById("edge-store-link").style.fontSize = "18px";
+        }
+
         function generateRain() {           
             setInterval(() => {
                 const rain = document.createElement('div');
@@ -411,7 +482,7 @@
         let rainbowTimeout = null;
         const RAINBOW_DELAY = 3000;
         const rainbow = createRainbow();
-        function showRainbow() { rainbow.style.opacity = 0.5; }
+        function showRainbow() { rainbow.style.opacity = 0.6; }
         function hideRainbow() { rainbow.style.opacity = 0; clearTimeout(rainbowTimeout); }
         function resetRainbowTimer() { hideRainbow(); clearTimeout(rainbowTimeout); rainbowTimeout = setTimeout(showRainbow, RAINBOW_DELAY); }
         window.addEventListener('mousemove', resetRainbowTimer);
@@ -421,4 +492,3 @@
     </script>
 </body>
 </html>
-
