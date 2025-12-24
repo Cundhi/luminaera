@@ -223,6 +223,12 @@
                             </a>
                         </p>
                         <p>
+                            <a href="https://addons.mozilla.org/zh-CN/firefox/addon/luminaera-threadjumper/" target="_blank" id="firefox-store-link" style="display:inline-flex; align-items:center; gap:8px;">
+                                <img src="./firefox-icon.png" alt="Firefox" style="width:20px; height:20px;" id="firefox-icon">
+                                Get it on Mozilla Firefox
+                            </a>
+                        </p>
+                        <p>
                             <a href="https://threadjumper.luminaera.tech" target="_blank" style="display:inline-flex; align-items:center; gap:8px;color:#333;">
                                 <img src="./gumroad-icon.ico" alt="Gumroad"  style="width:20px; height:20px;">
                                 Buy Activation Key (Gumroad)
@@ -246,7 +252,6 @@
             <p><em>Sometimes the best products aren’t the ones you plan to build for others.<br>They’re the ones you’ve been using every day — quietly, instinctively — long before you ever thought of packaging them.</em></p>
         </div>
 
-        <!-- 改为折叠式三层哲学 -->
         <div class="philosophy" id="philosophy">
         <h2>Philosophy in Practice</h2>
 
@@ -352,7 +357,6 @@
     </div>
 
     <script>
-        // 原有 JS 保留
         const slogans = [
             "We build tools we can't live without — then reluctantly share them.",
             "Good things take time. Great things take longer.",
@@ -370,11 +374,8 @@
                     document.getElementById('story').scrollIntoView({ behavior: 'smooth' });
                     const column = document.getElementById('threadjumper-column');
                     if (column) {
-                        // 立即消失
                         column.style.opacity = '0';
                         column.style.transition = 'opacity 0.5s ease';
-
-                        // 10秒后淡回
                         setTimeout(() => {
                             column.style.opacity = '1';
                         }, 10000);
@@ -445,9 +446,12 @@
             }
         });
 
-        // 检测是否 Edge 浏览器，若是则高亮 Edge 链接
         function isEdgeBrowser() {
             return navigator.userAgent.indexOf("Edg/") > -1;
+        }
+
+        function isFireFoxBrowser() {
+            return navigator.userAgent.indexOf("fox/") > -1;
         }
 
         if (isEdgeBrowser()) {
@@ -455,6 +459,11 @@
             document.getElementById("edge-icon").style.height = "32px";
             document.getElementById("edge-store-link").style.fontWeight = "bold";
             document.getElementById("edge-store-link").style.fontSize = "18px";
+        } else if(isFireFoxBrowser()) {
+            document.getElementById("firefox-icon").style.width = "32px";
+            document.getElementById("firefox-icon").style.height = "32px";
+            document.getElementById("firefox-store-link").style.fontWeight = "bold";
+            document.getElementById("firefox-store-link").style.fontSize = "18px";
         }
 
         function generateRain() {           
@@ -493,4 +502,3 @@
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "241bef231e1a4259b9d2c455c3a631e1"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
-
