@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - SMS Backup &amp; Bindings</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    h1, h2 {
+      color: #111;
+    }
+    a {
+      color: #0066cc;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #f0f0f0;
+    }
+    .highlight {
+      background-color: #f0f0f0;
+      padding: 15px;
+      border-left: 4px solid #0066cc;
+      margin: 20px 0;
+    }
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 0.9em;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Privacy Policy</h1>
+  <p><strong>SMS Backup &amp; Bindings</strong></p>
+  <p>Last updated: September 18, 2026</p>
+
+  <div class="highlight">
+    <p><strong>Published by Luminaera LLC.</strong> This app runs on your device. There is no Luminaera account and no Luminaera server for this app.</p>
+    <p>This app is <strong>not directed at children under 13</strong>.</p>
+  </div>
+
+  <p>Display names: <strong>SMS Backup &amp; Bindings</strong> (English), <strong>短信备份与绑号整理</strong> (Simplified Chinese), <strong>簡訊備份與綁定整理</strong> (Traditional Chinese).</p>
+
+  <h2>What the app does</h2>
+  <p>It backs up SMS on this device to an XML file <strong>you</strong> choose (Storage Access Framework). After a backup it also builds a local “bindings” list: which services sent verification SMS in that backup, plus labels you add yourself.</p>
+  <p>Restore writes SMS back into the device inbox. Android only allows that while this app is the <strong>default SMS app</strong>. Restore asks for that role, writes the messages, then tells you to switch back to your usual messaging app. This app is not a daily messenger.</p>
+  <p>A PIN is optional. If you set one, backup, restore, and the bindings list wait behind it. The PIN is stored only on the device as a PBKDF2 hash. You can turn it off. If you forget it, you may leave the unlock screen in the foreground for six hours to clear the PIN (the bindings data stays); leaving the app restarts that wait. You can disable that wait. From the same unlock screen you may erase this app’s local data (PIN, bindings database, in-app SMS copy). Files you saved to a folder stay. Uninstalling also deletes the on-device copy.</p>
+
+  <h2>Data we read</h2>
+  <table>
+    <thead>
+      <tr><th>Data</th><th>Why</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>SMS (<code>READ_SMS</code>)</td>
+        <td>Backup and restore. Bindings are derived from the backup file, not from a live scanner.</td>
+      </tr>
+      <tr>
+        <td>SMS write / default SMS role (only during restore)</td>
+        <td>Insert restored messages. Incoming SMS during that short window are written to the inbox; incoming MMS PDUs are written to the system MMS store so they are not dropped. MMS is not scanned for bindings.</td>
+      </tr>
+      <tr>
+        <td>Folder you pick</td>
+        <td>To save and later reopen the XML backup.</td>
+      </tr>
+      <tr>
+        <td>Launcher apps on this phone</td>
+        <td>Optional: on Check by service, match them against the bundled catalog so you can add those services as no-SMS rows. The list stays on the device.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>The app does <strong>not</strong> request phone-number or phone-state permission. Dual-SIM labels come from SMS <code>sub_id</code>, from text in the backup, and from what you type.</p>
+  <p>This build does <strong>not</strong> read your mailbox and does <strong>not</strong> request internet permission. It does <strong>not</strong> list every installed package (<code>QUERY_ALL_PACKAGES</code> is not used). App names are not uploaded.</p>
+  <p>You may optionally compose an email (via the system share sheet) that lists <strong>service names you check</strong>, with phone numbers masked and no verification codes, to help Luminaera improve recognition. That send is yours; the app does not upload in the background. When you open mail, a browser, or another app through the system share sheet, those third-party apps and websites are governed by their own privacy policies.</p>
+
+  <h2>What stays on the device</h2>
+  <ul>
+    <li>PIN (PBKDF2-HMAC-SHA256 hash in app-private storage that is not cloud-backed up)</li>
+    <li>Encrypted local database (SQLCipher) of binding events and your labels</li>
+    <li>A working copy of the last XML in app-private storage, used to show the bindings list</li>
+    <li>The folder URI you chose, and optional labels you typed for SIM cards / carriers (app-private preferences)</li>
+  </ul>
+  <p>The archive in <strong>your</strong> folder is yours. Uninstalling the app does not delete that file. A plaintext XML backup in the folder you choose is stored under your control; you are responsible for keeping that file safe. A PIN-protected archive is encrypted; the same PIN is required to open it in this app. Uninstalling does delete the PIN, the encrypted database, and the working copy.</p>
+
+  <h2>What we do not do</h2>
+  <ul>
+    <li>No Luminaera backend, analytics, crash reporter, or ads</li>
+    <li>No cloud backup or device-to-device copy of the app’s private store (<code>allowBackup=false</code>, device-transfer denied)</li>
+    <li>No scanning of RCS or MMS for the bindings list. While this app temporarily holds the default SMS role, incoming MMS is stored so the system does not drop it.</li>
+    <li>No sending of SMS as a messenger</li>
+  </ul>
+  <p>After you mark every service on Check by service as something other than Confirmed, you may optionally send services <strong>you confirmed by labeling SMS</strong>, each with one message you pick. Verification codes are masked. Auto-recognized services and no-SMS entries are not included. You send via the system email app to <a href="mailto:sms-bindings@luminaera.tech">sms-bindings@luminaera.tech</a>. This app does not request internet permission and does not upload in the background.</p>
+
+  <h2>Default SMS role</h2>
+  <p>While this app is the default SMS app, the system delivers incoming SMS and MMS to it. The app writes SMS into the inbox and MMS PDUs into the system store, and does not provide a chat UI. Switch back immediately after restore.</p>
+  <p><code>RECEIVE_SMS</code> and related manifest entries exist only so Android will grant the default SMS role during restore. The app does not keep a live SMS log.</p>
+
+  <h2>Children</h2>
+  <p>This app is not directed at children under 13, and we do not knowingly collect personal information from children under 13.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If this privacy policy changes, the updated version will be published on this page.</p>
+
+  <h2>Contact</h2>
+  <p>If you have questions about this privacy policy, contact us at:</p>
+  <p><a href="mailto:info@luminaera.tech">info@luminaera.tech</a></p>
+
+  <footer>
+    &copy; 2026 Luminaera LLC. All rights reserved.
+  </footer>
+</body>
+</html>
