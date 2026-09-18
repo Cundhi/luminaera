@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SMS Backup & Bindings — local SMS backup and number↔service ledger. No cloud sync.">
+  <title>SMS Backup & Bindings</title>
+  <style>
+    :root {
+      --bg: #F5EDE3;
+      --island: #5C3A21;
+      --rain: #C4A574;
+      --wave: #A67C52;
+      --sms: #3DDC97;
+      --ink: #2A2A2A;
+      --muted: #6B5A4A;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    a { color: var(--island); }
+    a:hover { color: var(--sms); }
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 28px 20px 64px;
+    }
+    .top {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .stripe {
+      width: 10px;
+      min-height: 72px;
+      background: var(--sms);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .brand-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--island);
+      letter-spacing: -0.02em;
+    }
+    .value {
+      margin: 10px 0 0;
+      color: var(--ink);
+      font-size: 0.95rem;
+    }
+    .cta-row {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .cta {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 6px;
+      background: rgba(196, 165, 116, 0.45);
+      color: var(--island);
+      font-weight: 600;
+      font-size: 0.9rem;
+      pointer-events: none;
+      user-select: none;
+    }
+    .nav-links {
+      margin-left: auto;
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-align: right;
+      padding-top: 4px;
+    }
+    .nav-links a {
+      color: var(--muted);
+      margin-left: 12px;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+    .nav-links a:hover {
+      color: var(--island);
+      border-bottom-color: var(--rain);
+    }
+    .corner-icon {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 72px;
+      height: 72px;
+      border-radius: 14px;
+      display: block;
+      box-shadow: 0 1px 3px rgba(92, 58, 33, 0.12);
+    }
+    hr.wave {
+      border: 0;
+      border-top: 1px solid var(--wave);
+      opacity: 0.45;
+      margin: 8px 0 28px;
+    }
+    article.story { font-size: 1.05rem; }
+    article.story h2 {
+      font-size: 1.2rem;
+      color: var(--island);
+      margin: 1.6em 0 0.6em;
+    }
+    article.story p { margin: 0 0 1em; }
+    .comic {
+      margin: 28px 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .panel {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #efe4d6;
+      border: 1.5px solid var(--rain);
+      border-radius: 8px;
+      overflow: hidden;
+      padding: 0;
+      margin: 0;
+    }
+    .panel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .panel .cap {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 6px 8px;
+      font-size: 0.75rem;
+      background: rgba(245,237,227,0.92);
+      color: var(--muted);
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    @media (max-width: 520px) {
+      .nav-links { margin-left: 0; text-align: left; width: 100%; margin-top: 8px; }
+      .nav-links a { margin-left: 0; margin-right: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div class="stripe" aria-hidden="true"></div>
+      <div style="flex:1; min-width:0;">
+        <div class="brand-row">
+          <img class="icon" src="assets/icon.svg?v=crop1" alt="" width="48" height="48">
+          <h1>SMS Backup &amp; Bindings</h1>
+        </div>
+        <p class="value">Local SMS backup · Number↔service ledger · No cloud sync</p>
+        <div class="cta-row">
+          <span class="cta" aria-disabled="true">Coming soon</span>
+          <nav class="nav-links" aria-label="Page links">
+            <a href="privacy.html">Privacy</a>
+            <a href="mailto:info@luminaera.tech">Contact</a>
+            <a href="../">Home</a>
+          </nav>
+        </div>
+      </div>
+      <img class="corner-icon" src="assets/app-icon-72.png?v=crop1" srcset="assets/app-icon-144.png?v=crop1 2x" width="72" height="72" alt="SMS Backup &amp; Bindings">
+    </header>
+
+    <hr class="wave">
+
+    <article class="story">
+      <h2>Changing phones is when it hits you</h2>
+      <p>Verification codes keep arriving, and you still have no idea what accounts are tied to your number. Digging through old SMS feels like archaeology. Trying to delete an account is worse—the cancel button is buried or missing.</p>
+
+      <h2>Honest limits</h2>
+      <p>This app won’t catch every verification SMS. Zero results are common if your messaging app auto-deletes OTPs (turn that off—deleted messages don’t come back) or if OTP protection blocks reads. Be honest with yourself before you blame the ledger.</p>
+
+      <h2>So why use it anyway?</h2>
+      <p>Because a local binding ledger still helps. You won’t magically find every binding on earth, but you can recover most of the important ones—and take the backup plus ledger with you when you switch phones. No cloud sync story. Local first.</p>
+
+      <section class="comic" aria-label="Four-panel story">
+        <figure class="panel">
+          <img src="comic/01-panic.png?v=cast2" alt="1 · Panic" width="1280" height="720" loading="lazy">
+          <figcaption class="cap">1 · Panic</figcaption>
+        </figure>
+        <figure class="panel">
+          <img src="comic/02-buried.png?v=cast2" alt="2 · Buried" width="1280" height="720" loading="lazy">
+          <figcaption class="cap">2 · Buried</figcaption>
+        </figure>
+        <figure class="panel">
+          <img src="comic/03-ledger.png?v=cast2" alt="3 · Ledger" width="1280" height="720" loading="lazy">
+          <figcaption class="cap">3 · Ledger</figcaption>
+        </figure>
+        <figure class="panel">
+          <img src="comic/04-takeaway.png?v=cast2" alt="4 · Takeaway" width="1280" height="720" loading="lazy">
+          <figcaption class="cap">4 · Takeaway</figcaption>
+        </figure>
+      </section>
+
+      <h2>Next step</h2>
+      <p>When it’s live: install from the store. Until then: Coming soon. <a href="privacy.html">Privacy</a> and <a href="mailto:info@luminaera.tech">contact</a> are linked above.</p>
+    </article>
+
+    <footer>
+      © Luminaera LLC · SMS Backup &amp; Bindings
+    </footer>
+  </div>
+</body>
+</html>
