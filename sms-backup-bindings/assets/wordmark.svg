@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320">
+  <rect width="1200" height="320" fill="#F5EDE3"/>
+  <!-- icon mark placeholder circle using brand sms green accent bar -->
+  <rect x="48" y="96" width="8" height="96" rx="4" fill="#3DDC97"/>
+  <text x="80" y="150" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="48" font-weight="700" fill="#5C3A21">SMS Backup &amp; Bindings</text>
+  <text x="80" y="200" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="28" fill="#6B5A4A">短信备份与绑号台帐</text>
+  <text x="80" y="250" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="18" fill="#C4A574">Luminaera · local-first</text>
+</svg>
