@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="Interactive web demo of SMS Backup & Bindings (paid full-app experience). Fictional data only." />
+  <title>Demo · SMS Backup & Bindings</title>
+  <link rel="stylesheet" href="css/demo.css?v=20260930-soon" />
+</head>
+<body>
+  <div class="page-wrap">
+    <div class="phone" id="phone" aria-label="Demo phone frame">
+      <div class="phone-status">
+        <span>9:41</span>
+        <span>●●● LTE</span>
+      </div>
+      <div class="phone-rail" aria-hidden="true"></div>
+      <div class="phone-body" id="phone-body"></div>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      <div class="modal hidden" id="modal"></div>
+      <nav class="phone-nav" aria-label="System navigation">
+        <button type="button" class="phone-nav-btn" id="nav-back" title="Back" aria-label="Back">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        <button type="button" class="phone-nav-btn" id="nav-home" title="Home" aria-label="Home">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        </button>
+        <button type="button" class="phone-nav-btn" id="nav-recents" title="Recents" aria-label="Recents">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="4" y="6" width="12" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="4" width="12" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="2" opacity="0.55"/></svg>
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Hard gate BEFORE ledger — never show pretty ledger first -->
+  <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+    <div class="gate-card">
+      <p class="gate-kicker" id="gate-kicker">DEMO</p>
+      <h1 id="gate-title">This is a web demo</h1>
+      <p id="gate-lead">Please read these points before you start:</p>
+      <ul class="gate-list" id="gate-list">
+        <li id="gate-1"></li>
+        <li id="gate-2"></li>
+        <li id="gate-3"></li>
+        <li id="gate-4"></li>
+        <li id="gate-5"></li>
+      </ul>
+      <button type="button" class="btn btn-primary gate-start" id="gate-enter">Start experience</button>
+      <p class="gate-play">
+        <a class="link" href="#" id="gate-cta-link">Get the full app on Google Play</a>
+      </p>
+    </div>
+  </div>
+  <div class="gate-soon hidden" id="gate-soon" role="dialog" aria-modal="true" aria-labelledby="gate-soon-text">
+    <div class="gate-soon-card">
+      <p id="gate-soon-text">Coming soon</p>
+      <div class="modal-actions">
+        <button type="button" class="link" id="gate-soon-close">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/i18n.js?v=20260930-toast-copy"></script>
+  <script src="js/contiguous-pick.js?v=20260930-zero-sms"></script>
+  <script src="js/app.js?v=20260930-soon"></script>
+</body>
+</html>
