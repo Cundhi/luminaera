@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light only">
     <title>Luminaera</title>
+    <meta name="description" content="Luminaera LLC. App development.">
+    <link rel="canonical" href="https://luminaera.tech/">
+    <meta property="og:title" content="Luminaera">
+    <meta property="og:description" content="Luminaera LLC. App development.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://luminaera.tech/">
+    <meta property="og:image" content="https://luminaera.tech/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Luminaera">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Luminaera">
+    <meta name="twitter:description" content="Luminaera LLC. App development.">
+    <meta name="twitter:image" content="https://luminaera.tech/og.png">
     <link rel="icon" type="image/x-icon" href="/favicon-32x32.ico" sizes="32x32">
     <link rel="apple-touch-icon" href="/favicon-128x128.ico" sizes="128x128">
     <style>
@@ -13,493 +27,332 @@
             background: #fff;
             color: #333;
             margin: 0;
-            padding: 0;
             min-height: 100vh;
-            position: relative;
             overflow-x: hidden;
         }
-        .rain {
-            position: fixed;
-            width: 2px;
-            height: 80px;
-            background: linear-gradient(transparent, rgba(0,0,0,0.6));
-            transform: rotate(40deg);
-            animation: fallDiagonal linear infinite;
-        }
-        @keyframes fallDiagonal {
-            0% { transform: translate(0, -100px) rotate(40deg); opacity: 0; }
-            10% { opacity: 0.6; }
-            100% { transform: translate(-500px, 120vh) rotate(40deg); opacity: 0; }
-        }
-        .rainbow {
-            position: fixed;
-            top: -5%;
-            left: 100%;
-            transform: translateX(-50%);
-            width: 300vmax;
-            height: 300vmax;
-            border-radius: 50%;
-            background: radial-gradient(
-                circle at center,
-                transparent 60%,
-                rgba(255,0,255,0.08) 61%,
-                rgba(0,0,255,0.08) 63%,
-                rgba(0,255,255,0.08) 65%,
-                rgba(0,255,0,0.08) 67%,
-                rgba(255,255,0,0.08) 69%,
-                rgba(255,165,0,0.08) 71%,
-                rgba(255,0,0,0.08) 73%,
-                transparent 75%
-            );
-            opacity: 0;
-            filter: blur(4px);
-            pointer-events: none;
-            z-index: 1;
-            transition: opacity 4s ease-in-out;
-        }
-        .container {
-            max-width: 1000px;
+        a { color: #1a5f9e; text-decoration: underline; }
+        .stage { padding-top: 2vh; }
+        .mark {
+            position: relative;
+            width: min(68vh, 92vw, 840px);
             margin: 0 auto;
-            padding: 60px 20px;
+        }
+        .mark picture, .mark img { display: block; width: 100%; height: auto; }
+        .card {
+            position: absolute;
+            z-index: 2;
+            left: 39.22%;
+            top: 62.5%;
+            width: 20.16%;
+            height: 13.12%;
+            box-sizing: border-box;
+            padding: 0 1%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            overflow: hidden;
+        }
+        .card-fit { width: 100%; }
+        .card h1, .phone h1 {
+            margin: 0;
+            font-weight: 600;
+            line-height: 1.05;
+            color: #222;
+            white-space: nowrap;
+        }
+        .card h1 { font-size: 2.4vmin; }
+        .line {
+            margin: 0.35em 0 0;
+            color: #555;
+            line-height: 1.15;
+            white-space: nowrap;
+        }
+        .card .line { font-size: 1.45vmin; }
+        .email { margin: 0.4em 0 0; line-height: 1.15; white-space: nowrap; }
+        .card .email { font-size: 1.25vmin; }
+        .phone { display: none; }
+        .history {
             position: relative;
             z-index: 2;
+            max-width: 760px;
+            margin: 12px auto 0;
+            padding: 8px 16px 4px;
         }
-        h1 { font-size: 48px; margin-bottom: 10px; }
-        .slogan { font-size: 20px; color: #666; margin: 20px 0; cursor: pointer; }
-        .three-column {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin: 60px 0;
-        }
-        .column { flex: 1; padding: 20px; }
-        .logo img { width: 150px; height: 150px; }
-        #countdown { font-size: 28px; margin: 20px 0; color: #333; }
-        #current-time { font-size: 18px; color: #777; }
-        .story, .philosophy {
-            max-width: 700px;
-            margin: 60px auto;
-            text-align: left;
-            line-height: 1.6;
-            margin-bottom: 1.2em;
-        }
-        .story h2, .philosophy h2 { text-align: center; margin-bottom: 30px; }
-        .footer {
-            margin-top: 80px;
-            padding: 20px;
-            color: #999;
-            font-size: 14px;
-        }
-        .footer a { color: #666; text-decoration: none; margin: 0 10px; }
-        .footer a:hover { text-decoration: underline; }
-        @media (max-width: 768px) { 
-            .three-column { flex-direction: column; }
-            h1 { font-size: 36px; }
-        }
-        .philosophy details { 
-            margin-bottom: 20px; 
-            border-left: 3px solid #ccc;
-            padding-left: 15px;
-            cursor: pointer;
-        }
-        .philosophy summary {
-            font-weight: bold;
-            font-size: 18px;
+        .graph {
             list-style: none;
-            outline: none;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+            margin: 0;
+            padding: 0;
         }
-        .philosophy summary span {
-            font-weight: normal;
-            color: #666;
-            font-size: 14px;
-            display: block;
-        }
-        .philosophy summary::-webkit-details-marker { display:none; }
-        .philosophy p { margin: 10px 0 0 0; }
-        .philosophy-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .philo-left { align-self: flex-start; max-width: 60%; }
-        .philo-right { align-self: flex-end; max-width: 60%; }
-        .philosophy details {
-            border-left: 3px solid #ccc;
-            padding-left: 15px;
-            cursor: pointer;
-            position: relative;
-        }
-        .philosophy summary {
-            font-weight: bold;
-            font-size: 18px;
-            list-style: none;
-            outline: none;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .philosophy summary::-webkit-details-marker { display:none; }
-        .philosophy summary span {
-            font-weight: normal;
-            color: #666;
-            font-size: 14px;
-            display: block;
-            line-height: 1.4;
-        }
-        .philo-content {
-            margin-top: 10px;
-            text-align: left;
-        }
-        .arrow {
-            display: inline-block;
-            transition: transform 0.3s ease;
-            font-style: normal;
-        }
-        details[open] .arrow {
-            transform: rotate(90deg);
-        }
-        @media (max-width: 768px) {
-            .philo-left, .philo-right { align-self: center; max-width: 90%; }
-        }
-        .edge-link {
-            position: relative;
-            display: inline-block;
-        }
-        .edge-link:hover::after {
-            content: "";
+        .wires {
             position: absolute;
-            left: 50%;
-            top: -40px;
-            transform: translateX(-50%);
-            width: 32px;
-            height: 32px;
-            background: url('./edge-icon.png') no-repeat center;
-            background-size: contain;
+            left: 0;
+            top: 0;
             pointer-events: none;
-            animation: fadeIn 0.3s ease;
+            overflow: visible;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; top: -50px; }
-            to { opacity: 1; top: -40px; }
+        .node { position: relative; }
+        .dot {
+            position: absolute;
+            top: 18px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #2f6fad;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .node[data-lane="0"] .dot { left: 10px; }
+        .node[data-lane="1"] .dot { left: 34px; background: #20786f; }
+        .node[data-head] .dot {
+            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #b8892e;
+        }
+        .node button {
+            position: relative;
+            z-index: 0;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px 12px;
+            width: 100%;
+            min-height: 48px;
+            margin: 0;
+            padding: 8px 8px 8px 58px;
+            border: 0;
+            background: transparent;
+            color: #222;
+            font: inherit;
+            font-size: 15px;
+            text-align: left;
+            cursor: pointer;
+        }
+        .node button:hover { background: rgba(0, 0, 0, 0.04); }
+        .node button[aria-expanded="true"] { background: rgba(47, 111, 173, 0.10); }
+        .node button[aria-expanded="true"]:hover { background: rgba(47, 111, 173, 0.14); }
+        .node button:focus-visible { outline: 2px solid #2f6fad; outline-offset: -2px; }
+        .subject { flex: 1 1 12em; min-width: 8em; }
+        time { flex: 0 0 auto; color: #666; font-size: 13px; }
+        .chev { flex: 0 0 auto; color: #777; }
+        .fact {
+            margin: 0 12px 10px 58px;
+            color: #333;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .fact[hidden] { display: none; }
+        .site-foot {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 28px 20px 56px;
+        }
+        .manifesto { margin: 0; font-size: 16px; color: #333; }
+        .manifesto a,
+        .manifesto a:visited,
+        .manifesto a:hover {
+            color: inherit;
+            text-decoration: none;
+            cursor: auto;
+        }
+        .manifesto a:focus-visible { outline: 2px solid #2f6fad; outline-offset: 2px; }
+        .foot-links { margin: 10px 0 0; font-size: 15px; }
+        .legal { margin: 14px 0 0; color: #666; font-size: 13px; }
+        @media (max-width: 760px) {
+            .desk { display: none; }
+            .phone {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                width: min(100% - 32px, 520px);
+                margin: 28px auto 4px;
+            }
+            .phone > div { position: relative; z-index: 2; }
+            .phone img { width: 88px; height: 88px; flex: none; }
+            .phone h1 { font-size: 28px; }
+            .phone .line { margin: 4px 0 0; font-size: 16px; }
+            .phone .email { margin: 8px 0 0; font-size: 16px; }
         }
     </style>
 </head>
-<body onload="generateRain()">
-    <div class="container">
-        <h1>Luminaera</h1>
-        <div class="slogan" onclick="document.getElementById('philosophy').scrollIntoView({behavior: 'smooth'});">Loading wisdom...</div>
-
-        <div class="three-column">
-            <div class="column logo">
-                <picture>
-                    <source srcset="./logo.svg" type="image/svg+xml">
-                    <img src="./logo.png" alt="Luminaera Logo">
-                </picture>
-            </div>
-            <div class="column">
-                <p>Something meaningful is coming…</p>
-                <div id="countdown"></div>
-                <div id="current-time"></div>
-            </div>
-            <div class="column logo" id="threadjumper-column">
-                <p style="margin-top: 20px;">ThreadJumper — Now Available</p>
-                <picture>
-                    <source srcset="./threadjumper-logo.svg" type="image/svg+xml">
-                    <img src="./threadjumper-logo.png" alt="ThreadJumper Logo">
-                </picture>
-                <div style="margin-top: 15px;">
-                    <a href="javascript:void(0)" id="discover-link" style="color:#333; font-weight:bold;">
-                        Discover <span id="arrow">▼</span>
-                    </a>
-                    <div id="store-list" style="display:none; margin-top: 10px; text-align:center;">
-                        <p>
-                            <a href="https://microsoftedge.microsoft.com/addons/detail/luminaera-threadjumper/alkmhaijoeamonhhlclinclopbpaaggp" target="_blank" style="display:inline-flex; align-items:center; gap:8px;color:#333;" id="edge-store-link">
-                                <img src="./edge-icon.png" alt="Edge" style="width:20px; height:20px;" id="edge-icon">
-                                Get it on Microsoft Edge
-                            </a>
-                        </p>
-                        <p>
-                            <a href="https://addons.mozilla.org/zh-CN/firefox/addon/luminaera-threadjumper/" target="_blank" id="firefox-store-link" style="display:inline-flex; align-items:center; gap:8px;color:#333;">
-                                <img src="./firefox-icon.png" alt="Firefox" style="width:20px; height:20px;" id="firefox-icon">
-                                Get it on Mozilla Firefox
-                            </a>
-                        </p>
-                        <p>
-                            <a href="https://threadjumper.luminaera.tech" target="_blank" style="display:inline-flex; align-items:center; gap:8px;color:#333;">
-                                <img src="./gumroad-icon.ico" alt="Gumroad"  style="width:20px; height:20px;">
-                                Buy Activation Key (Gumroad)
-                            </a>
-                        </p>
+<body>
+    <main>
+        <div class="stage">
+            <div class="desk">
+                <div class="mark">
+                    <picture>
+                        <source srcset="/logo.svg" type="image/svg+xml">
+                        <img src="/logo.png" alt="">
+                    </picture>
+                    <div class="card">
+                        <div class="card-fit">
+                            <h1>Luminaera</h1>
+                            <p class="line">App development.</p>
+                            <p class="email"><a href="mailto:info@luminaera.tech">info@luminaera.tech</a></p>
+                        </div>
                     </div>
                 </div>
-                <!--<p><a href="https://microsoftedge.microsoft.com/addons/detail/luminaera-threadjumper/alkmhaijoeamonhhlclinclopbpaaggp" style="color:#333; font-weight:bold;">Discover →</a></p>-->
+            </div>
+            <div class="phone">
+                <img src="/logo.svg" alt="">
+                <div>
+                    <h1>Luminaera</h1>
+                    <p class="line">App development.</p>
+                    <p class="email"><a href="mailto:info@luminaera.tech">info@luminaera.tech</a></p>
+                </div>
             </div>
         </div>
-
-        <div class="story" id="story">
-            <h2>How ThreadJumper Was Born</h2>
-            <p><em>ThreadJumper didn’t start as a product.<br>It started as a necessity.</em></p>
-            <p>In a company where nearly every task involves AI, long conversations were unavoidable. Context sprawled. Important threads disappeared. We built a tool for ourselves — something that let us jump between messages, mark what mattered, and navigate branches without losing our place.</p>
-            <p>Iteration by iteration, it quietly became indispensable.</p>
-            <p>It was always first on our internal roadmap. Not because it was ambitious, but because we believed that to do good work, one must first sharpen one’s tools.</p>
-            <p>Still, it was never meant to be sold.</p>
-            <p><em><b>Until the bills arrived.</b></em></p>
-            <p>And so the tool born out of necessity became our first commercial product.</p>
-            <p><em>Sometimes the best products aren’t the ones you plan to build for others.<br>They’re the ones you’ve been using every day — quietly, instinctively — long before you ever thought of packaging them.</em></p>
-        </div>
-
-        <div class="philosophy" id="philosophy">
-        <h2>Philosophy in Practice</h2>
-
-            <div class="philosophy-grid">
-
-                <details class="philo-left">
-                    <summary>
-                        <strong>Always a Way Out</strong>
-                        <span>
-                            A future you cannot navigate is not worth trusting.<br>
-                            Every path deserves a quiet exit — especially when the world updates overnight.
-                        </span>
-                        <i class="arrow">▸</i>
-                    </summary>
-                    <div class="philo-content">
-                        <p>ThreadJumper evolves from manual workflows to automation — never fully replacing them.</p>
-                        <p>If Pro remark positioning breaks due to an AI site update, you can still:</p>
-                        <ul>
-                            <li>Alt + M to open the remark list</li>
-                            <li><b>One-click</b> copy the remark text to clipboard</li>
-                            <li>Ctrl + F and paste to locate instantly</li>
-                        </ul>
-                        <p>Efficiency dips slightly, but your work never stops. We’d rather you lose a few seconds than lose your flow — especially during the inevitable gap between site updates and store reviews.</p>
-                        <p>The same logic applies to super positioning, remark editing, and every critical path.</p>
-                        <p>We’re probably obsessive about safety.  
-                        But with ThreadJumper, you’re never truly stuck.  
-                        There’s always a way out.  
-                        You just might not have noticed it yet.</p>
-                    </div>
-                </details>
-
-                <details class="philo-right">
-                    <summary>
-                        <strong>Invisible by Default</strong>
-                        <span>
-                            The best companions know when to disappear.<br>
-                            They wait in perfect silence — appearing only when truly needed.
-                        </span>
-                        <i class="arrow">▸</i>
-                    </summary>
-                    <div class="philo-content">
-                        <p>We hate noisy tools. ThreadJumper stays completely silent unless you call it.</p>
-                        <p>No floating panels, no badge counters, no unsolicited interruptions.</p>
-                        <p>When you open a supported AI page, it places a small “I’m here” in the top-right corner — not to demand attention, but to quietly reassure you that it’s ready when you are.</p>
-                        <p>If that message is missing, you’ll know something’s off: refresh the page, or reinstall (remember to export your data first).</p>
-                        <p>And if an official update temporarily breaks visibility, don’t worry — Alt + M is always waiting in the shadows, ready to be summoned.</p>
-                        <p>We’re probably a bit obsessive about staying out of your way.  
-                        But that’s the point: the tool should serve you, not the other way around.</p>
-                    </div>
-                </details>
-
-                <details class="philo-left">
-                    <summary>
-                        <strong>Designed for Longevity</strong>
-                        <span>
-                            We optimize for decades, not for headlines.<br>
-                            Speed is seductive. Survival is sacred.
-                        </span>
-                        <i class="arrow">▸</i>
-                    </summary>
-                    <div class="philo-content">
-                        <p>We don’t chase benchmarks. We chase decades.</p>
-                        <p>ThreadJumper’s core navigation algorithm is deliberately conservative: it prioritizes universality and durability over raw speed. It’s designed to survive frequent AI site updates — the kind that break flashier solutions overnight.</p>
-                        <p>Faster methods come later, always layered on top of the proven, slow-but-unbreakable foundation. If the fast path fails, the reliable one is still there, waiting.</p>
-                        <p>We call it the turtle strategy.</p>
-                        <p>Slow, stubborn, and annoyingly hard to kill.</p>
-                        <p>Because in the end, the tools that last longest are the ones that stay with you longest.</p>
-                    </div>
-                </details>
-
-                <details class="philo-right">
-                    <summary>
-                        <strong>Monks in the Core, Jesters on the <a href="https://microsoftedge.microsoft.com/addons/detail/luminaera-threadjumper/alkmhaijoeamonhhlclinclopbpaaggp" class="edge-link" target="_blank" style="color:#333;">Edge</a></strong>
-                        <span>
-                            Life is too fragile for constant tension.<br>
-                            We keep the core monastic — unflinching, austere, unbreakable.<br>
-                            Everything else is allowed to be a little ridiculous.
-                        </span>
-                        <i class="arrow">▸</i>
-                    </summary>
-                    <div class="philo-content">
-                        <p>ThreadJumper follows the same rule.</p>
-                        <p>Every life-or-death feature — navigation, fallbacks, data integrity — is treated with monastic seriousness: no shortcuts, no compromises, no tolerance for failure.</p>
-                        <p>Everything non-critical, however, is fair game for small pranks.</p>
-                        <p>Yes, we hid a couple of completely free keys in the corners.</p>
-                        <p>They do nothing dramatic — just a quiet smile for the curious.</p>
-                        <p>Finding them is optional. Missing them costs nothing.</p>
-                        <p>Our goal is to slip a small crack of light into the endless boredom of daily life.</p>
-                        <p>Nothing more.</p>
-                    </div>
-                </details>
-
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>info@luminaera.tech</p>
-            <p>
-                <a href="https://bafybeihmbgzn33u3rhgeop2yk5cilk7rebw3gwdzo7u32lx6i4oa5tjfpa.ipfs.w3s.link/even-hades-knew.html" target="_blank">The Life-Cherishing Manifesto</a>
-            </p>
-            <p>© 2025 Luminaera LLC. All rights reserved.</p>
-        </div>
-    </div>
-
+        <section class="history" id="history">
+            <svg class="wires" aria-hidden="true">
+                <path class="spine" fill="none" stroke="#2f6fad" stroke-width="2"></path>
+                <path class="branch" fill="none" stroke="#20786f" stroke-width="2"></path>
+            </svg>
+            <ol class="graph">
+                <li class="node" data-lane="0" data-head="1">
+                    <span class="dot" aria-hidden="true"></span>
+                    <button type="button" aria-expanded="false">
+                        <span class="subject">Current website</span>
+                        <time datetime="2026-10-01">Oct 1, 2026</time>
+                        <span class="chev" aria-hidden="true">▸</span>
+                    </button>
+                    <p class="fact" hidden>This is the current version of the website.</p>
+                </li>
+                <li class="node" data-lane="0">
+                    <span class="dot" aria-hidden="true"></span>
+                    <button type="button" aria-expanded="false">
+                        <span class="subject">Website updated</span>
+                        <time datetime="2025-12-24">Dec 24, 2025</time>
+                        <span class="chev" aria-hidden="true">▸</span>
+                    </button>
+                    <p class="fact" hidden>The website was updated on this day. <a href="/his/v2-threadjumper/">View this version</a></p>
+                </li>
+                <li class="node" data-lane="0">
+                    <span class="dot" aria-hidden="true"></span>
+                    <button type="button" aria-expanded="false">
+                        <span class="subject">Logo published</span>
+                        <time datetime="2025-06-01">June 1, 2025</time>
+                        <span class="chev" aria-hidden="true">▸</span>
+                    </button>
+                    <p class="fact" hidden>The company logo was finished, and the website was updated to show it. <a href="/his/v2-2025-06-01/">View this version</a></p>
+                </li>
+                <li class="node" data-lane="0">
+                    <span class="dot" aria-hidden="true"></span>
+                    <button type="button" aria-expanded="false">
+                        <span class="subject">Luminaera LLC formed</span>
+                        <time datetime="2025-05-12">May 12, 2025</time>
+                        <span class="chev" aria-hidden="true">▸</span>
+                    </button>
+                    <p class="fact" hidden>Luminaera LLC was formed on this day. The filing is a public record of the Delaware Division of Corporations.</p>
+                </li>
+                <li class="node" data-lane="1">
+                    <span class="dot" aria-hidden="true"></span>
+                    <button type="button" aria-expanded="false">
+                        <span class="subject">Website launched</span>
+                        <time datetime="2025-05-10">May 10, 2025</time>
+                        <span class="chev" aria-hidden="true">▸</span>
+                    </button>
+                    <p class="fact" hidden>The first public page of this site went up on this day, before Luminaera LLC was formed. <a href="/his/v1-2025-05-10/">View this version</a></p>
+                </li>
+                <li class="node" data-lane="0">
+                    <span class="dot" aria-hidden="true"></span>
+                    <button type="button" aria-expanded="false">
+                        <span class="subject">Registration submitted</span>
+                        <time datetime="2025-05-08">May 8, 2025</time>
+                        <span class="chev" aria-hidden="true">▸</span>
+                    </button>
+                    <p class="fact" hidden>Registration of Luminaera LLC was submitted on this day.</p>
+                </li>
+            </ol>
+        </section>
+    </main>
+    <footer class="site-foot">
+        <p class="manifesto"><a href="https://arweave.net/hahqiveI9RMrunPis0SJxt_p_pBFIJkg4pY1DNapWUA/">We cherish life — yours and ours.</a></p>
+        <p class="foot-links"><a href="/privacy.html">Privacy</a></p>
+        <p class="legal">© 2026 Luminaera LLC. All rights reserved.</p>
+    </footer>
     <script>
-        const slogans = [
-            "We build tools we can't live without — then reluctantly share them.",
-            "Good things take time. Great things take longer.",
-            "No sales. Prices only go up. We’d rather earn less and let you live longer.",
-            "The best products are often the ones you didn't plan to sell.",
-            "We cherish life — yours and ours."
-        ];
-        document.querySelector('.slogan').textContent = slogans[Math.floor(Math.random() * slogans.length)];
-        document.querySelectorAll('.slogan').forEach(slogan => {
-            slogan.style.cursor = 'pointer';
-            slogan.addEventListener('click', () => {
-                const text = slogan.textContent.trim();
-
-                if (text.includes("reluctantly share them") || text.includes("didn't plan to sell")) {
-                    document.getElementById('story').scrollIntoView({ behavior: 'smooth' });
-                    const column = document.getElementById('threadjumper-column');
-                    if (column) {
-                        column.style.opacity = '0';
-                        column.style.transition = 'opacity 0.5s ease';
-                        setTimeout(() => {
-                            column.style.opacity = '1';
-                        }, 10000);
-                    }
+        (function fitCard() {
+            var card = document.querySelector(".card");
+            var fit = card.querySelector(".card-fit");
+            var title = fit.querySelector("h1");
+            var line = fit.querySelector(".line");
+            var email = fit.querySelector(".email");
+            function apply(size) {
+                title.style.fontSize = size + "px";
+                line.style.fontSize = (size * 0.62) + "px";
+                email.style.fontSize = (size * 0.52) + "px";
+            }
+            function fits(size) {
+                apply(size);
+                return fit.offsetHeight <= card.clientHeight + 0.5
+                    && fit.scrollWidth <= card.clientWidth + 0.5;
+            }
+            function run() {
+                if (card.clientWidth < 8 || card.clientHeight < 8) return;
+                var lo = 8;
+                var hi = 72;
+                var best = 8;
+                while (hi - lo > 0.4) {
+                    var mid = (lo + hi) / 2;
+                    if (fits(mid)) { best = mid; lo = mid; }
+                    else hi = mid;
                 }
+                apply(best);
+            }
+            window.addEventListener("resize", run);
+            run();
+        })();
 
-                if (text.includes("Great things take longer")) {
-                    const details = document.querySelector('.philosophy details:nth-of-type(3)');
-                    details.scrollIntoView({ behavior: 'smooth' });
-                    details.open = true;
-                }
-
-                if (text.includes("live longer") || text.includes("cherish life")) {
-                    document.querySelector('.footer').scrollIntoView({ behavior: 'smooth' });
-                    const manifesto = document.querySelector('.footer a[href*="hades"]');
-                    if (manifesto) {
-                        manifesto.style.fontSize = '36px';
-                        manifesto.style.transition = 'font-size 0.5s';
-                        setTimeout(() => manifesto.style.fontSize = '14px', 2000);
-                    }
-                }
+        (function historyGraph() {
+            var root = document.querySelector(".history");
+            var svg = root.querySelector(".wires");
+            var spine = svg.querySelector(".spine");
+            var branch = svg.querySelector(".branch");
+            var nodes = [].slice.call(root.querySelectorAll(".node"));
+            function center(node) {
+                var dot = node.querySelector(".dot");
+                var rr = root.getBoundingClientRect();
+                var dr = dot.getBoundingClientRect();
+                return {
+                    x: dr.left + dr.width / 2 - rr.left,
+                    y: dr.top + dr.height / 2 - rr.top
+                };
+            }
+            function seg(a, b) {
+                return "M" + a.x.toFixed(1) + " " + a.y.toFixed(1) + "L" + b.x.toFixed(1) + " " + b.y.toFixed(1);
+            }
+            function fork(a, b) {
+                var y1 = (a.y * 2 + b.y) / 3;
+                var y2 = (a.y + b.y * 2) / 3;
+                return "M" + a.x.toFixed(1) + " " + a.y.toFixed(1)
+                    + "C" + a.x.toFixed(1) + " " + y1.toFixed(1)
+                    + "," + b.x.toFixed(1) + " " + y2.toFixed(1)
+                    + "," + b.x.toFixed(1) + " " + b.y.toFixed(1);
+            }
+            function draw() {
+                var w = root.clientWidth;
+                var h = root.clientHeight;
+                svg.setAttribute("width", w);
+                svg.setAttribute("height", h);
+                svg.setAttribute("viewBox", "0 0 " + w + " " + h);
+                var p = nodes.map(center);
+                spine.setAttribute("d", seg(p[0], p[1]) + seg(p[1], p[2]) + seg(p[2], p[3]) + seg(p[3], p[5]));
+                branch.setAttribute("d", fork(p[5], p[4]) + fork(p[4], p[3]));
+            }
+            root.querySelectorAll(".node button").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    var fact = button.nextElementSibling;
+                    var open = button.getAttribute("aria-expanded") === "true";
+                    button.setAttribute("aria-expanded", open ? "false" : "true");
+                    fact.hidden = open;
+                    button.querySelector(".chev").textContent = open ? "▸" : "▾";
+                    draw();
+                });
             });
-        });
-
-
-        const launchDate = new Date("2026-04-01T00:00:00").getTime();
-        const countdownElement = document.getElementById("countdown");
-        const updateCountdown = () => {
-            const now = new Date().getTime();
-            const distance = launchDate - now;
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s<br><small>Estimated: April 2026</small>`;
-            if (distance < 0) {
-                clearInterval(interval);
-                countdownElement.innerHTML = "We're brewing something new...";
-            }
-        };
-        const interval = setInterval(updateCountdown, 1000);
-        updateCountdown();
-
-        const currentTimeElement = document.getElementById("current-time");
-        const updateCurrentTime = () => {
-            const now = new Date();
-            const options = { 
-                year: 'numeric', month: '2-digit', day: '2-digit',
-                hour: '2-digit', minute: '2-digit', second: '2-digit',
-                hour12: false,
-                timeZoneName: 'short'
-            };
-            currentTimeElement.innerHTML = `Current Time: ${new Intl.DateTimeFormat(undefined, options).format(now)}`;
-        };
-        setInterval(updateCurrentTime, 1000);
-        updateCurrentTime();
-
-        document.getElementById("discover-link").addEventListener("click", function(e) {
-            e.preventDefault();
-            const list = document.getElementById("store-list");
-            const arrow = document.getElementById("arrow");
-            if (list.style.display === "none" || list.style.display === "") {
-                list.style.display = "block";
-                arrow.textContent = "▲";
-            } else {
-                list.style.display = "none";
-                arrow.textContent = "▼";
-            }
-        });
-
-        function isEdgeBrowser() {
-            return navigator.userAgent.indexOf("Edg/") > -1;
-        }
-
-        function isFireFoxBrowser() {
-            return navigator.userAgent.indexOf("fox/") > -1;
-        }
-
-        if (isEdgeBrowser()) {
-            document.getElementById("edge-icon").style.width = "32px";
-            document.getElementById("edge-icon").style.height = "32px";
-            document.getElementById("edge-store-link").style.fontWeight = "bold";
-            document.getElementById("edge-store-link").style.fontSize = "18px";
-        } else if(isFireFoxBrowser()) {
-            document.getElementById("firefox-icon").style.width = "32px";
-            document.getElementById("firefox-icon").style.height = "32px";
-            document.getElementById("firefox-store-link").style.fontWeight = "bold";
-            document.getElementById("firefox-store-link").style.fontSize = "18px";
-        }
-
-        function generateRain() {           
-            setInterval(() => {
-                const rain = document.createElement('div');
-                rain.className = 'rain';
-                rain.style.left = Math.random() * 65 + 35 + '%';
-                rain.style.top = '-50px';
-                rain.style.height = Math.random() * 60 + 40 + 'px';
-                rain.style.opacity = Math.random() * 0.4 + 0.2;
-                rain.style.animationDuration = Math.random() * 2 + 3 + 's';
-                document.body.appendChild(rain);
-                setTimeout(() => { if (rain.parentNode) rain.remove(); }, 6000);
-            }, Math.random() * 2000 + 1500);
-        }
-
-        function createRainbow() {
-            const rainbow = document.createElement('div');
-            rainbow.className = 'rainbow';
-            document.body.appendChild(rainbow);
-            return rainbow;
-        }
-
-        generateRain();
-        let rainbowTimeout = null;
-        const RAINBOW_DELAY = 3000;
-        const rainbow = createRainbow();
-        function showRainbow() { rainbow.style.opacity = 0.6; }
-        function hideRainbow() { rainbow.style.opacity = 0; clearTimeout(rainbowTimeout); }
-        function resetRainbowTimer() { hideRainbow(); clearTimeout(rainbowTimeout); rainbowTimeout = setTimeout(showRainbow, RAINBOW_DELAY); }
-        window.addEventListener('mousemove', resetRainbowTimer);
-        window.addEventListener('click', resetRainbowTimer);
-        window.addEventListener('scroll', resetRainbowTimer);
-        resetRainbowTimer();
+            window.addEventListener("resize", draw);
+            draw();
+        })();
     </script>
+    <script src="/rain.js"></script>
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "241bef231e1a4259b9d2c455c3a631e1"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
-
 </html>
