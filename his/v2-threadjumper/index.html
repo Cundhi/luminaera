@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light only">
+    <title>Luminaera (archived)</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/x-icon" href="/favicon-32x32.ico" sizes="32x32">
+    <link rel="apple-touch-icon" href="/favicon-128x128.ico" sizes="128x128">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        h1 { font-size: 48px; margin-bottom: 10px; }
+        .slogan { font-size: 20px; color: #666; margin: 20px 0; cursor: pointer; }
+        .three-column {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 60px 0;
+        }
+        .column { flex: 1; padding: 20px; }
+        .logo img { width: 150px; height: 150px; }
+        #countdown { font-size: 28px; margin: 20px 0; color: #333; }
+        #current-time { font-size: 18px; color: #777; }
+        .story, .philosophy {
+            max-width: 700px;
+            margin: 60px auto;
+            text-align: left;
+            line-height: 1.6;
+            margin-bottom: 1.2em;
+        }
+        .story h2, .philosophy h2 { text-align: center; margin-bottom: 30px; }
+        .footer {
+            margin-top: 80px;
+            padding: 20px;
+            color: #999;
+            font-size: 14px;
+        }
+        .footer a { color: #666; text-decoration: none; margin: 0 10px; }
+        .footer a:hover { text-decoration: underline; }
+        .archive-note {
+            margin: 0 auto 28px;
+            max-width: 700px;
+            padding: 10px 14px;
+            border: 1px solid #ccc;
+            background: #f7f7f7;
+            color: #333;
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: left;
+        }
+        .archive-note a { color: #1a5f9e; text-decoration: underline; }
+        @media (max-width: 768px) { 
+            .three-column { flex-direction: column; }
+            h1 { font-size: 36px; }
+        }
+        .philosophy details { 
+            margin-bottom: 20px; 
+            border-left: 3px solid #ccc;
+            padding-left: 15px;
+            cursor: pointer;
+        }
+        .philosophy summary {
+            font-weight: bold;
+            font-size: 18px;
+            list-style: none;
+            outline: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .philosophy summary span {
+            font-weight: normal;
+            color: #666;
+            font-size: 14px;
+            display: block;
+        }
+        .philosophy summary::-webkit-details-marker { display:none; }
+        .philosophy p { margin: 10px 0 0 0; }
+        .philosophy-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .philo-left { align-self: flex-start; max-width: 60%; }
+        .philo-right { align-self: flex-end; max-width: 60%; }
+        .philosophy details {
+            border-left: 3px solid #ccc;
+            padding-left: 15px;
+            cursor: pointer;
+            position: relative;
+        }
+        .philosophy summary {
+            font-weight: bold;
+            font-size: 18px;
+            list-style: none;
+            outline: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .philosophy summary::-webkit-details-marker { display:none; }
+        .philosophy summary span {
+            font-weight: normal;
+            color: #666;
+            font-size: 14px;
+            display: block;
+            line-height: 1.4;
+        }
+        .philo-content {
+            margin-top: 10px;
+            text-align: left;
+        }
+        .arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+            font-style: normal;
+        }
+        details[open] .arrow {
+            transform: rotate(90deg);
+        }
+        @media (max-width: 768px) {
+            .philo-left, .philo-right { align-self: center; max-width: 90%; }
+        }
+        .edge-link {
+            position: relative;
+            display: inline-block;
+        }
+        .edge-link:hover::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: -40px;
+            transform: translateX(-50%);
+            width: 32px;
+            height: 32px;
+            background: url('./edge-icon.png') no-repeat center;
+            background-size: contain;
+            pointer-events: none;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; top: -50px; }
+            to { opacity: 1; top: -40px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p class="archive-note">Archived snapshot of an earlier luminaera.tech homepage. Store links and the old manifesto link are removed. <a href="/">Current site</a></p>
+        <h1>Luminaera</h1>
+        <div class="slogan" onclick="document.getElementById('philosophy').scrollIntoView({behavior: 'smooth'});">Loading wisdom...</div>
+
+        <div class="three-column">
+            <div class="column logo">
+                <picture>
+                    <source srcset="/logo.svg" type="image/svg+xml">
+                    <img src="/logo.png" alt="Luminaera Logo">
+                </picture>
+            </div>
+            <div class="column">
+                <p>Something meaningful is coming…</p>
+            </div>
+            <div class="column logo" id="threadjumper-column">
+                <picture>
+                    <source srcset="threadjumper-logo.svg" type="image/svg+xml">
+                    <img src="threadjumper-logo.png" alt="ThreadJumper Logo">
+                </picture>
+            </div>
+        </div>
+
+        <div class="story" id="story">
+            <h2>How ThreadJumper Was Born</h2>
+            <p><em>ThreadJumper didn’t start as a product.<br>It started as a necessity.</em></p>
+            <p>In a company where nearly every task involves AI, long conversations were unavoidable. Context sprawled. Important threads disappeared. We built a tool for ourselves — something that let us jump between messages, mark what mattered, and navigate branches without losing our place.</p>
+            <p>Iteration by iteration, it quietly became indispensable.</p>
+            <p>It was always first on our internal roadmap. Not because it was ambitious, but because we believed that to do good work, one must first sharpen one’s tools.</p>
+            <p>Still, it was never meant to be sold.</p>
+            <p><em><b>Until the bills arrived.</b></em></p>
+            <p>And so the tool born out of necessity became our first commercial product.</p>
+            <p><em>Sometimes the best products aren’t the ones you plan to build for others.<br>They’re the ones you’ve been using every day — quietly, instinctively — long before you ever thought of packaging them.</em></p>
+        </div>
+
+        <div class="philosophy" id="philosophy">
+        <h2>Philosophy in Practice</h2>
+
+            <div class="philosophy-grid">
+
+                <details class="philo-left">
+                    <summary>
+                        <strong>Always a Way Out</strong>
+                        <span>
+                            A future you cannot navigate is not worth trusting.<br>
+                            Every path deserves a quiet exit — especially when the world updates overnight.
+                        </span>
+                        <i class="arrow">▸</i>
+                    </summary>
+                    <div class="philo-content">
+                        <p>ThreadJumper evolves from manual workflows to automation — never fully replacing them.</p>
+                        <p>If Pro remark positioning breaks due to an AI site update, you can still:</p>
+                        <ul>
+                            <li>Alt + M to open the remark list</li>
+                            <li><b>One-click</b> copy the remark text to clipboard</li>
+                            <li>Ctrl + F and paste to locate instantly</li>
+                        </ul>
+                        <p>Efficiency dips slightly, but your work never stops. We’d rather you lose a few seconds than lose your flow — especially during the inevitable gap between site updates and store reviews.</p>
+                        <p>The same logic applies to super positioning, remark editing, and every critical path.</p>
+                        <p>We’re probably obsessive about safety.  
+                        But with ThreadJumper, you’re never truly stuck.  
+                        There’s always a way out.  
+                        You just might not have noticed it yet.</p>
+                    </div>
+                </details>
+
+                <details class="philo-right">
+                    <summary>
+                        <strong>Invisible by Default</strong>
+                        <span>
+                            The best companions know when to disappear.<br>
+                            They wait in perfect silence — appearing only when truly needed.
+                        </span>
+                        <i class="arrow">▸</i>
+                    </summary>
+                    <div class="philo-content">
+                        <p>We hate noisy tools. ThreadJumper stays completely silent unless you call it.</p>
+                        <p>No floating panels, no badge counters, no unsolicited interruptions.</p>
+                        <p>When you open a supported AI page, it places a small “I’m here” in the top-right corner — not to demand attention, but to quietly reassure you that it’s ready when you are.</p>
+                        <p>If that message is missing, you’ll know something’s off: refresh the page, or reinstall (remember to export your data first).</p>
+                        <p>And if an official update temporarily breaks visibility, don’t worry — Alt + M is always waiting in the shadows, ready to be summoned.</p>
+                        <p>We’re probably a bit obsessive about staying out of your way.  
+                        But that’s the point: the tool should serve you, not the other way around.</p>
+                    </div>
+                </details>
+
+                <details class="philo-left">
+                    <summary>
+                        <strong>Designed for Longevity</strong>
+                        <span>
+                            We optimize for decades, not for headlines.<br>
+                            Speed is seductive. Survival is sacred.
+                        </span>
+                        <i class="arrow">▸</i>
+                    </summary>
+                    <div class="philo-content">
+                        <p>We don’t chase benchmarks. We chase decades.</p>
+                        <p>ThreadJumper’s core navigation algorithm is deliberately conservative: it prioritizes universality and durability over raw speed. It’s designed to survive frequent AI site updates — the kind that break flashier solutions overnight.</p>
+                        <p>Faster methods come later, always layered on top of the proven, slow-but-unbreakable foundation. If the fast path fails, the reliable one is still there, waiting.</p>
+                        <p>We call it the turtle strategy.</p>
+                        <p>Slow, stubborn, and annoyingly hard to kill.</p>
+                        <p>Because in the end, the tools that last longest are the ones that stay with you longest.</p>
+                    </div>
+                </details>
+
+                <details class="philo-right">
+                    <summary>
+                        <strong>Monks in the Core, Jesters on the Edge</strong>
+                        <span>
+                            Life is too fragile for constant tension.<br>
+                            We keep the core monastic — unflinching, austere, unbreakable.<br>
+                            Everything else is allowed to be a little ridiculous.
+                        </span>
+                        <i class="arrow">▸</i>
+                    </summary>
+                    <div class="philo-content">
+                        <p>ThreadJumper follows the same rule.</p>
+                        <p>Every life-or-death feature — navigation, fallbacks, data integrity — is treated with monastic seriousness: no shortcuts, no compromises, no tolerance for failure.</p>
+                        <p>Everything non-critical, however, is fair game for small pranks.</p>
+                        <p>Yes, we hid a couple of completely free keys in the corners.</p>
+                        <p>They do nothing dramatic — just a quiet smile for the curious.</p>
+                        <p>Finding them is optional. Missing them costs nothing.</p>
+                        <p>Our goal is to slip a small crack of light into the endless boredom of daily life.</p>
+                        <p>Nothing more.</p>
+                    </div>
+                </details>
+
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><a href="mailto:info@luminaera.tech">info@luminaera.tech</a></p>
+            <p>© 2025 Luminaera LLC. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        const slogans = [
+            "We build tools we can't live without — then reluctantly share them.",
+            "Good things take time. Great things take longer.",
+            "No sales. Prices only go up. We’d rather earn less and let you live longer.",
+            "The best products are often the ones you didn't plan to sell.",
+            "We cherish life — yours and ours."
+        ];
+        document.querySelector('.slogan').textContent = slogans[Math.floor(Math.random() * slogans.length)];
+        document.querySelectorAll('.slogan').forEach(slogan => {
+            slogan.style.cursor = 'pointer';
+            slogan.addEventListener('click', () => {
+                const text = slogan.textContent.trim();
+
+                if (text.includes("reluctantly share them") || text.includes("didn't plan to sell")) {
+                    document.getElementById('story').scrollIntoView({ behavior: 'smooth' });
+                }
+
+                if (text.includes("Great things take longer")) {
+                    const details = document.querySelector('.philosophy details:nth-of-type(3)');
+                    details.scrollIntoView({ behavior: 'smooth' });
+                    details.open = true;
+                }
+
+                if (text.includes("live longer") || text.includes("cherish life")) {
+                    document.querySelector('.footer').scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+    </script>
+    <script src="/rain.js"></script>
+    <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "241bef231e1a4259b9d2c455c3a631e1"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
