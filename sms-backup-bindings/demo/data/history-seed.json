@@ -1,0 +1,124 @@
+{
+  "history": [
+    {
+      "id": "h1",
+      "serviceId": "gooble-mail",
+      "action": "confirmed",
+      "lineKey": "sub:1",
+      "fromMasked": null,
+      "toMasked": "•••-•••-1204",
+      "atMs": 1726142400000,
+      "note": null
+    },
+    {
+      "id": "h2",
+      "serviceId": "pearphone-id",
+      "action": "bound",
+      "lineKey": "sub:1",
+      "fromMasked": null,
+      "toMasked": "•••-•••-1204",
+      "atMs": 1726315200000,
+      "note": null
+    },
+    {
+      "id": "h3",
+      "serviceId": "luckten-hub",
+      "action": "unbound",
+      "lineKey": "sub:2",
+      "fromMasked": "•••-•••-8831",
+      "toMasked": null,
+      "atMs": 1726488000000,
+      "note": null
+    },
+    {
+      "id": "h4",
+      "serviceId": "junglecart",
+      "action": "bound",
+      "lineKey": "sub:1",
+      "fromMasked": null,
+      "toMasked": "•••-•••-1204",
+      "atMs": 1726574400000,
+      "note": null
+    },
+    {
+      "id": "h5",
+      "serviceId": "netflakes-stream",
+      "action": "rebound",
+      "lineKey": "sub:3",
+      "fromMasked": "•••-•••-1204",
+      "toMasked": "•••-•••-4417",
+      "atMs": 1726747200000,
+      "note": "Demo rebound seed"
+    },
+    {
+      "id": "h6",
+      "serviceId": "chatzap",
+      "action": "not_bound",
+      "lineKey": "sub:2",
+      "fromMasked": null,
+      "toMasked": null,
+      "atMs": 1726833600000,
+      "note": null
+    },
+    {
+      "id": "h7",
+      "serviceId": "limechat",
+      "action": "bound",
+      "lineKey": "sub:2",
+      "fromMasked": null,
+      "toMasked": "•••-•••-8831",
+      "atMs": 1726920000000,
+      "note": null
+    },
+    {
+      "id": "h8",
+      "serviceId": "cablegram",
+      "action": "unbound",
+      "lineKey": "sub:3",
+      "fromMasked": "•••-•••-4417",
+      "toMasked": null,
+      "atMs": 1727006400000,
+      "note": null
+    },
+    {
+      "id": "h9",
+      "serviceId": "paybuddy-wallet",
+      "action": "confirmed",
+      "lineKey": "sub:1",
+      "fromMasked": null,
+      "toMasked": "•••-•••-1204",
+      "atMs": 1727092800000,
+      "note": null
+    },
+    {
+      "id": "h10",
+      "serviceId": "shoppea-mart",
+      "action": "confirmed",
+      "lineKey": "sub:2",
+      "fromMasked": null,
+      "toMasked": "•••-•••-8831",
+      "atMs": 1727179200000,
+      "note": null
+    },
+    {
+      "id": "h11",
+      "serviceId": "cubber-rides",
+      "action": "bound",
+      "lineKey": "sub:3",
+      "fromMasked": null,
+      "toMasked": "•••-•••-4417",
+      "atMs": 1727265600000,
+      "note": null
+    },
+    {
+      "id": "h12",
+      "serviceId": "microhard-account",
+      "action": "rebound",
+      "lineKey": "sub:1",
+      "fromMasked": "•••-•••-8831",
+      "toMasked": "•••-•••-1204",
+      "atMs": 1727330400000,
+      "note": null
+    }
+  ]
+}
