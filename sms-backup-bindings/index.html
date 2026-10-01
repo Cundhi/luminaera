@@ -26,6 +26,8 @@
     a { color: var(--island); }
     a:hover { color: var(--sms); }
     .wrap {
+      position: relative;
+      z-index: 2;
       max-width: 720px;
       margin: 0 auto;
       padding: 28px 20px 64px;
@@ -179,6 +181,7 @@
         <div class="cta-row">
           <span class="cta" aria-disabled="true">Coming soon</span>
           <nav class="nav-links" aria-label="Page links">
+            <a href="demo/">Try the demo</a>
             <a href="privacy.html">Privacy</a>
             <a href="mailto:info@luminaera.tech">Contact</a>
             <a href="../">Home</a>
@@ -220,12 +223,13 @@
       </section>
 
       <h2>Next step</h2>
-      <p>When it’s live: install from the store. Until then: Coming soon. <a href="privacy.html">Privacy</a> and <a href="mailto:info@luminaera.tech">contact</a> are linked above.</p>
+      <p>Until the store listing is live: <a href="demo/">open the interactive demo</a> (fictional data, not your SMS). <a href="privacy.html">Privacy</a> and <a href="mailto:info@luminaera.tech">contact</a> are linked above.</p>
     </article>
 
     <footer>
       © Luminaera LLC · SMS Backup &amp; Bindings
     </footer>
   </div>
+  <script src="/rain.js"></script>
 </body>
 </html>
