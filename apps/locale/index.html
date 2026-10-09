@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light only">
+    <title>Locale codes</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/x-icon" href="/favicon-32x32.ico" sizes="32x32">
+    <link rel="apple-touch-icon" href="/favicon-128x128.ico" sizes="128x128">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff;
+            color: #333;
+            margin: 0;
+            line-height: 1.55;
+        }
+        .wrap {
+            max-width: 40rem;
+            margin: 0 auto;
+            padding: 48px 24px 72px;
+        }
+        h1 {
+            margin: 28px 0 8px;
+            font-size: 28px;
+            font-weight: 600;
+            color: #222;
+        }
+        a { color: #1a5f9e; text-decoration: underline; }
+        .sample { color: #666; font-size: 14px; margin: 0; }
+        #sample-line { margin: 0 0 4px; }
+        #written-line { margin: 0 0 28px; }
+        label {
+            display: block;
+            color: #222;
+            font-weight: 600;
+        }
+        input, select {
+            font: inherit;
+            color: #333;
+            background: #fff;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 8px 0 12px;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        select { margin-bottom: 0; cursor: pointer; }
+        button {
+            font: inherit;
+            color: #fff;
+            background: #1a5f9e;
+            border: 0;
+            border-radius: 4px;
+            min-height: 44px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+        button:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 2px solid #2f6fad;
+            outline-offset: 2px;
+        }
+        #out { margin-top: 28px; }
+        .card { margin: 0 0 28px; }
+        .card h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+            color: #222;
+        }
+        dl { margin: 0; }
+        dt {
+            margin-top: 10px;
+            color: #666;
+            font-size: 13px;
+        }
+        dd { margin: 0; color: #222; }
+        .miss { margin: 0; color: #333; }
+        @media (max-width: 760px) {
+            button { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <main class="wrap">
+        <p><a href="/">Luminaera</a></p>
+        <label for="ui" data-msg="uiLang">Language</label>
+        <select id="ui"></select>
+        <h1 data-msg="title">Locale codes</h1>
+        <p class="sample" id="sample-line">Sample: 2020-03-04 17:08:09 UTC · 1234.5</p>
+        <p class="sample" id="written-line"></p>
+        <form id="lookup">
+            <label for="q" data-msg="query">Code or name</label>
+            <input id="q" name="q" autocomplete="off" spellcheck="false" dir="auto">
+            <button type="submit" data-msg="submit">Look up</button>
+        </form>
+        <div id="out" aria-live="polite"></div>
+    </main>
+    <script>
+        (function () {
+            var SAMPLE = new Date(Date.UTC(2020, 2, 4, 17, 8, 9));
+            var AMOUNT = 1234.5;
+            var FIXED = "2020-03-04 17:08:09 UTC · 1234.5";
+            var STORE = "apps.locale.ui";
+            var CODES = [
+                "ar", "ar-EG", "ar-SA", "bg", "ca", "cs", "cs-CZ", "da", "da-DK",
+                "de", "de-AT", "de-CH", "de-DE", "el", "el-GR", "en", "en-AU",
+                "en-CA", "en-GB", "en-IN", "en-US", "es", "es-ES", "es-MX", "et",
+                "fi", "fi-FI", "fr", "fr-CA", "fr-FR", "he", "he-IL", "hi", "hi-IN",
+                "hr", "hu", "hu-HU", "id", "id-ID", "it", "it-IT", "ja", "ja-JP",
+                "ko", "ko-KR", "lt", "lv", "ms", "ms-MY", "nb", "nb-NO", "nl",
+                "nl-BE", "nl-NL", "pl", "pl-PL", "pt", "pt-BR", "pt-PT", "ro",
+                "ro-RO", "ru", "ru-RU", "sk", "sl", "sv", "sv-SE", "th", "th-TH",
+                "tr", "tr-TR", "uk", "uk-UA", "vi", "vi-VN", "zh", "zh-Hans",
+                "zh-Hant", "zh-CN", "zh-SG", "zh-TW", "zh-HK", "zh-MO"
+            ];
+            var PARENT = {
+                "zh-HK": ["zh-Hant", "zh"],
+                "zh-TW": ["zh-Hant", "zh"],
+                "zh-MO": ["zh-Hant", "zh"],
+                "zh-CN": ["zh-Hans", "zh"],
+                "zh-SG": ["zh-Hans", "zh"]
+            };
+            var CURRENCY = {
+                AE: "AED", AR: "ARS", AT: "EUR", AU: "AUD", BD: "BDT", BE: "EUR",
+                BR: "BRL", CA: "CAD", CH: "CHF", CL: "CLP", CN: "CNY", CO: "COP",
+                CZ: "CZK", DE: "EUR", DK: "DKK", EG: "EGP", ES: "EUR", FI: "EUR",
+                FR: "EUR", GB: "GBP", GR: "EUR", HK: "HKD", HU: "HUF", ID: "IDR",
+                IE: "EUR", IL: "ILS", IN: "INR", IT: "EUR", JP: "JPY", KE: "KES",
+                KR: "KRW", MO: "MOP", MX: "MXN", MY: "MYR", NG: "NGN", NL: "EUR",
+                NO: "NOK", NZ: "NZD", PH: "PHP", PK: "PKR", PL: "PLN", PT: "EUR",
+                RO: "RON", RU: "RUB", SA: "SAR", SE: "SEK", SG: "SGD", TH: "THB",
+                TR: "TRY", TW: "TWD", UA: "UAH", US: "USD", VN: "VND", ZA: "ZAR"
+            };
+            var MESSAGES = {
+                en: {
+                    title: "Locale codes",
+                    sample: "Sample: {fixed}",
+                    written: "In this language: {local}",
+                    uiLang: "Language",
+                    follow: "Follow the browser",
+                    query: "Code or name",
+                    submit: "Look up",
+                    name: "Name in this language",
+                    english: "English name",
+                    native: "Native name",
+                    parents: "Parents",
+                    none: "None",
+                    longDate: "Long date",
+                    shortDate: "Short date",
+                    longTime: "Long time",
+                    currency: "Currency",
+                    currencyCode: "Currency code",
+                    currencySymbol: "Currency symbol",
+                    amount: "Amount",
+                    noCurrency: "No currency data.",
+                    notRecognized: "Not recognized.",
+                    noEntry: "No entry."
+                },
+                "zh-Hans": {
+                    title: "区域性代码",
+                    sample: "样例：{fixed}",
+                    written: "用这个界面语言写成：{local}",
+                    uiLang: "语言",
+                    follow: "跟随浏览器",
+                    query: "代码或名称",
+                    submit: "查询",
+                    name: "这个语言里的名称",
+                    english: "英语名称",
+                    native: "本地名称",
+                    parents: "父区域",
+                    none: "无",
+                    longDate: "长日期",
+                    shortDate: "短日期",
+                    longTime: "长时间",
+                    currency: "货币",
+                    currencyCode: "货币代码",
+                    currencySymbol: "货币符号",
+                    amount: "金额",
+                    noCurrency: "没有货币数据。",
+                    notRecognized: "无法识别。",
+                    noEntry: "没有这一条。"
+                },
+                "zh-Hant": {
+                    title: "區域性代碼",
+                    sample: "樣例：{fixed}",
+                    written: "用這個介面語言寫成：{local}",
+                    uiLang: "語言",
+                    follow: "跟隨瀏覽器",
+                    query: "代碼或名稱",
+                    submit: "查詢",
+                    name: "這個語言裡的名稱",
+                    english: "英語名稱",
+                    native: "本地名稱",
+                    parents: "父區域",
+                    none: "無",
+                    longDate: "長日期",
+                    shortDate: "短日期",
+                    longTime: "長時間",
+                    currency: "貨幣",
+                    currencyCode: "貨幣代碼",
+                    currencySymbol: "貨幣符號",
+                    amount: "金額",
+                    noCurrency: "沒有貨幣資料。",
+                    notRecognized: "無法識別。",
+                    noEntry: "沒有這一條。"
+                },
+                ja: {
+                    title: "ロケールコード",
+                    sample: "サンプル：{fixed}",
+                    written: "この表示言語では：{local}",
+                    uiLang: "言語",
+                    follow: "ブラウザに合わせる",
+                    query: "コードまたは名前",
+                    submit: "調べる",
+                    name: "この言語での名前",
+                    english: "英語名",
+                    native: "現地名",
+                    parents: "親ロケール",
+                    none: "なし",
+                    longDate: "長い日付",
+                    shortDate: "短い日付",
+                    longTime: "長い時刻",
+                    currency: "通貨",
+                    currencyCode: "通貨コード",
+                    currencySymbol: "通貨記号",
+                    amount: "金額",
+                    noCurrency: "通貨データはありません。",
+                    notRecognized: "認識できません。",
+                    noEntry: "該当なし。"
+                },
+                ko: {
+                    title: "로케일 코드",
+                    sample: "샘플: {fixed}",
+                    written: "이 표시 언어로: {local}",
+                    uiLang: "언어",
+                    follow: "브라우저 따르기",
+                    query: "코드 또는 이름",
+                    submit: "찾기",
+                    name: "이 언어의 이름",
+                    english: "영어 이름",
+                    native: "현지 이름",
+                    parents: "상위 로케일",
+                    none: "없음",
+                    longDate: "긴 날짜",
+                    shortDate: "짧은 날짜",
+                    longTime: "긴 시간",
+                    currency: "통화",
+                    currencyCode: "통화 코드",
+                    currencySymbol: "통화 기호",
+                    amount: "금액",
+                    noCurrency: "통화 데이터가 없습니다.",
+                    notRecognized: "인식할 수 없습니다.",
+                    noEntry: "해당 항목이 없습니다."
+                },
+                de: {
+                    title: "Kulturcodes",
+                    sample: "Beispiel: {fixed}",
+                    written: "In dieser Sprache: {local}",
+                    uiLang: "Sprache",
+                    follow: "Dem Browser folgen",
+                    query: "Code oder Name",
+                    submit: "Nachschlagen",
+                    name: "Name in dieser Sprache",
+                    english: "Englischer Name",
+                    native: "Eigenname",
+                    parents: "Übergeordnet",
+                    none: "Keine",
+                    longDate: "Langes Datum",
+                    shortDate: "Kurzes Datum",
+                    longTime: "Lange Uhrzeit",
+                    currency: "Währung",
+                    currencyCode: "Währungscode",
+                    currencySymbol: "Währungssymbol",
+                    amount: "Betrag",
+                    noCurrency: "Keine Währungsdaten.",
+                    notRecognized: "Nicht erkannt.",
+                    noEntry: "Kein Eintrag."
+                },
+                fr: {
+                    title: "Codes de culture",
+                    sample: "Exemple : {fixed}",
+                    written: "Dans cette langue : {local}",
+                    uiLang: "Langue",
+                    follow: "Suivre le navigateur",
+                    query: "Code ou nom",
+                    submit: "Chercher",
+                    name: "Nom dans cette langue",
+                    english: "Nom anglais",
+                    native: "Nom local",
+                    parents: "Parents",
+                    none: "Aucun",
+                    longDate: "Date longue",
+                    shortDate: "Date courte",
+                    longTime: "Heure longue",
+                    currency: "Devise",
+                    currencyCode: "Code de devise",
+                    currencySymbol: "Symbole monétaire",
+                    amount: "Montant",
+                    noCurrency: "Pas de données monétaires.",
+                    notRecognized: "Non reconnu.",
+                    noEntry: "Aucune entrée."
+                },
+                es: {
+                    title: "Códigos de cultura",
+                    sample: "Ejemplo: {fixed}",
+                    written: "En este idioma: {local}",
+                    uiLang: "Idioma",
+                    follow: "Seguir el navegador",
+                    query: "Código o nombre",
+                    submit: "Consultar",
+                    name: "Nombre en este idioma",
+                    english: "Nombre en inglés",
+                    native: "Nombre local",
+                    parents: "Superiores",
+                    none: "Ninguno",
+                    longDate: "Fecha larga",
+                    shortDate: "Fecha corta",
+                    longTime: "Hora larga",
+                    currency: "Moneda",
+                    currencyCode: "Código de moneda",
+                    currencySymbol: "Símbolo de moneda",
+                    amount: "Importe",
+                    noCurrency: "No hay datos de moneda.",
+                    notRecognized: "No reconocido.",
+                    noEntry: "No hay ninguna entrada."
+                },
+                pt: {
+                    title: "Códigos de cultura",
+                    sample: "Exemplo: {fixed}",
+                    written: "Neste idioma: {local}",
+                    uiLang: "Idioma",
+                    follow: "Seguir o navegador",
+                    query: "Código ou nome",
+                    submit: "Consultar",
+                    name: "Nome neste idioma",
+                    english: "Nome em inglês",
+                    native: "Nome local",
+                    parents: "Superiores",
+                    none: "Nenhum",
+                    longDate: "Data longa",
+                    shortDate: "Data curta",
+                    longTime: "Hora longa",
+                    currency: "Moeda",
+                    currencyCode: "Código da moeda",
+                    currencySymbol: "Símbolo da moeda",
+                    amount: "Valor",
+                    noCurrency: "Sem dados de moeda.",
+                    notRecognized: "Não reconhecido.",
+                    noEntry: "Nenhuma entrada."
+                },
+                it: {
+                    title: "Codici di cultura",
+                    sample: "Esempio: {fixed}",
+                    written: "In questa lingua: {local}",
+                    uiLang: "Lingua",
+                    follow: "Segui il browser",
+                    query: "Codice o nome",
+                    submit: "Cerca",
+                    name: "Nome in questa lingua",
+                    english: "Nome inglese",
+                    native: "Nome locale",
+                    parents: "Locale padre",
+                    none: "Nessuno",
+                    longDate: "Data estesa",
+                    shortDate: "Data breve",
+                    longTime: "Ora estesa",
+                    currency: "Valuta",
+                    currencyCode: "Codice valuta",
+                    currencySymbol: "Simbolo valuta",
+                    amount: "Importo",
+                    noCurrency: "Nessun dato sulla valuta.",
+                    notRecognized: "Non riconosciuto.",
+                    noEntry: "Nessuna voce."
+                },
+                ru: {
+                    title: "Коды культур",
+                    sample: "Образец: {fixed}",
+                    written: "На этом языке: {local}",
+                    uiLang: "Язык",
+                    follow: "Как в браузере",
+                    query: "Код или название",
+                    submit: "Найти",
+                    name: "Название на этом языке",
+                    english: "Английское название",
+                    native: "Местное название",
+                    parents: "Родительские",
+                    none: "Нет",
+                    longDate: "Длинная дата",
+                    shortDate: "Короткая дата",
+                    longTime: "Длинное время",
+                    currency: "Валюта",
+                    currencyCode: "Код валюты",
+                    currencySymbol: "Символ валюты",
+                    amount: "Сумма",
+                    noCurrency: "Нет данных о валюте.",
+                    notRecognized: "Не распознано.",
+                    noEntry: "Нет такой записи."
+                },
+                ar: {
+                    title: "رموز الثقافة",
+                    sample: "العينة: {fixed}",
+                    written: "بهذه اللغة: {local}",
+                    uiLang: "اللغة",
+                    follow: "اتباع المتصفح",
+                    query: "الرمز أو الاسم",
+                    submit: "بحث",
+                    name: "الاسم بهذه اللغة",
+                    english: "الاسم بالإنجليزية",
+                    native: "الاسم المحلي",
+                    parents: "الأسلاف",
+                    none: "لا يوجد",
+                    longDate: "التاريخ الطويل",
+                    shortDate: "التاريخ القصير",
+                    longTime: "الوقت الطويل",
+                    currency: "العملة",
+                    currencyCode: "رمز العملة",
+                    currencySymbol: "علامة العملة",
+                    amount: "المبلغ",
+                    noCurrency: "لا توجد بيانات للعملة.",
+                    notRecognized: "غير معروف.",
+                    noEntry: "لا يوجد إدخال."
+                },
+                he: {
+                    title: "קודי תרבות",
+                    sample: "דוגמה: {fixed}",
+                    written: "בשפה זו: {local}",
+                    uiLang: "שפה",
+                    follow: "לפי הדפדפן",
+                    query: "קוד או שם",
+                    submit: "חיפוש",
+                    name: "השם בשפה זו",
+                    english: "שם באנגלית",
+                    native: "שם מקומי",
+                    parents: "הורים",
+                    none: "אין",
+                    longDate: "תאריך ארוך",
+                    shortDate: "תאריך קצר",
+                    longTime: "שעה ארוכה",
+                    currency: "מטבע",
+                    currencyCode: "קוד מטבע",
+                    currencySymbol: "סמל מטבע",
+                    amount: "סכום",
+                    noCurrency: "אין נתוני מטבע.",
+                    notRecognized: "לא מזוהה.",
+                    noEntry: "אין רשומה."
+                },
+                hi: {
+                    title: "लोकेल कोड",
+                    sample: "नमूना: {fixed}",
+                    written: "इस भाषा में: {local}",
+                    uiLang: "भाषा",
+                    follow: "ब्राउज़र का अनुसरण करें",
+                    query: "कोड या नाम",
+                    submit: "खोजें",
+                    name: "इस भाषा में नाम",
+                    english: "अंग्रेज़ी नाम",
+                    native: "स्थानीय नाम",
+                    parents: "उच्चतर",
+                    none: "कोई नहीं",
+                    longDate: "लंबी तिथि",
+                    shortDate: "छोटी तिथि",
+                    longTime: "लंबा समय",
+                    currency: "मुद्रा",
+                    currencyCode: "मुद्रा कोड",
+                    currencySymbol: "मुद्रा चिह्न",
+                    amount: "राशि",
+                    noCurrency: "मुद्रा डेटा नहीं है।",
+                    notRecognized: "पहचाना नहीं गया।",
+                    noEntry: "कोई प्रविष्टि नहीं।"
+                },
+                th: {
+                    title: "รหัสโลแคล",
+                    sample: "ตัวอย่าง: {fixed}",
+                    written: "ในภาษานี้: {local}",
+                    uiLang: "ภาษา",
+                    follow: "ตามเบราว์เซอร์",
+                    query: "รหัสหรือชื่อ",
+                    submit: "ค้นหา",
+                    name: "ชื่อในภาษานี้",
+                    english: "ชื่อภาษาอังกฤษ",
+                    native: "ชื่อท้องถิ่น",
+                    parents: "ระดับบน",
+                    none: "ไม่มี",
+                    longDate: "วันที่แบบยาว",
+                    shortDate: "วันที่แบบสั้น",
+                    longTime: "เวลาแบบยาว",
+                    currency: "สกุลเงิน",
+                    currencyCode: "รหัสสกุลเงิน",
+                    currencySymbol: "สัญลักษณ์สกุลเงิน",
+                    amount: "จำนวนเงิน",
+                    noCurrency: "ไม่มีข้อมูลสกุลเงิน",
+                    notRecognized: "ไม่รู้จัก",
+                    noEntry: "ไม่มีรายการนี้"
+                },
+                vi: {
+                    title: "Mã văn hóa",
+                    sample: "Mẫu: {fixed}",
+                    written: "Trong ngôn ngữ này: {local}",
+                    uiLang: "Ngôn ngữ",
+                    follow: "Theo trình duyệt",
+                    query: "Mã hoặc tên",
+                    submit: "Tra cứu",
+                    name: "Tên trong ngôn ngữ này",
+                    english: "Tên tiếng Anh",
+                    native: "Tên địa phương",
+                    parents: "Miền cha",
+                    none: "Không có",
+                    longDate: "Ngày dài",
+                    shortDate: "Ngày ngắn",
+                    longTime: "Giờ dài",
+                    currency: "Tiền tệ",
+                    currencyCode: "Mã tiền tệ",
+                    currencySymbol: "Ký hiệu tiền tệ",
+                    amount: "Số tiền",
+                    noCurrency: "Không có dữ liệu tiền tệ.",
+                    notRecognized: "Không nhận ra.",
+                    noEntry: "Không có mục này."
+                },
+                id: {
+                    title: "Kode lokal",
+                    sample: "Contoh: {fixed}",
+                    written: "Dalam bahasa ini: {local}",
+                    uiLang: "Bahasa",
+                    follow: "Ikuti peramban",
+                    query: "Kode atau nama",
+                    submit: "Cari",
+                    name: "Nama dalam bahasa ini",
+                    english: "Nama bahasa Inggris",
+                    native: "Nama lokal",
+                    parents: "Induk",
+                    none: "Tidak ada",
+                    longDate: "Tanggal panjang",
+                    shortDate: "Tanggal pendek",
+                    longTime: "Waktu panjang",
+                    currency: "Mata uang",
+                    currencyCode: "Kode mata uang",
+                    currencySymbol: "Simbol mata uang",
+                    amount: "Jumlah",
+                    noCurrency: "Tidak ada data mata uang.",
+                    notRecognized: "Tidak dikenali.",
+                    noEntry: "Tidak ada entri."
+                },
+                ms: {
+                    title: "Kod tempatan",
+                    sample: "Contoh: {fixed}",
+                    written: "Dalam bahasa ini: {local}",
+                    uiLang: "Bahasa",
+                    follow: "Ikut pelayar",
+                    query: "Kod atau nama",
+                    submit: "Cari",
+                    name: "Nama dalam bahasa ini",
+                    english: "Nama bahasa Inggeris",
+                    native: "Nama tempatan",
+                    parents: "Induk",
+                    none: "Tiada",
+                    longDate: "Tarikh panjang",
+                    shortDate: "Tarikh pendek",
+                    longTime: "Masa panjang",
+                    currency: "Mata wang",
+                    currencyCode: "Kod mata wang",
+                    currencySymbol: "Simbol mata wang",
+                    amount: "Jumlah",
+                    noCurrency: "Tiada data mata wang.",
+                    notRecognized: "Tidak dikenali.",
+                    noEntry: "Tiada entri."
+                },
+                nl: {
+                    title: "Cultuurcodes",
+                    sample: "Voorbeeld: {fixed}",
+                    written: "In deze taal: {local}",
+                    uiLang: "Taal",
+                    follow: "De browser volgen",
+                    query: "Code of naam",
+                    submit: "Opzoeken",
+                    name: "Naam in deze taal",
+                    english: "Engelse naam",
+                    native: "Eigen naam",
+                    parents: "Bovenliggend",
+                    none: "Geen",
+                    longDate: "Lange datum",
+                    shortDate: "Korte datum",
+                    longTime: "Lange tijd",
+                    currency: "Valuta",
+                    currencyCode: "Valutacode",
+                    currencySymbol: "Valutasymbool",
+                    amount: "Bedrag",
+                    noCurrency: "Geen valutagegevens.",
+                    notRecognized: "Niet herkend.",
+                    noEntry: "Geen vermelding."
+                },
+                pl: {
+                    title: "Kody kultur",
+                    sample: "Próbka: {fixed}",
+                    written: "W tym języku: {local}",
+                    uiLang: "Język",
+                    follow: "Zgodnie z przeglądarką",
+                    query: "Kod lub nazwa",
+                    submit: "Szukaj",
+                    name: "Nazwa w tym języku",
+                    english: "Nazwa angielska",
+                    native: "Nazwa lokalna",
+                    parents: "Nadrzędne",
+                    none: "Brak",
+                    longDate: "Długa data",
+                    shortDate: "Krótka data",
+                    longTime: "Długi czas",
+                    currency: "Waluta",
+                    currencyCode: "Kod waluty",
+                    currencySymbol: "Symbol waluty",
+                    amount: "Kwota",
+                    noCurrency: "Brak danych waluty.",
+                    notRecognized: "Nie rozpoznano.",
+                    noEntry: "Brak wpisu."
+                },
+                tr: {
+                    title: "Kültür kodları",
+                    sample: "Örnek: {fixed}",
+                    written: "Bu dilde: {local}",
+                    uiLang: "Dil",
+                    follow: "Tarayıcıyı izle",
+                    query: "Kod veya ad",
+                    submit: "Ara",
+                    name: "Bu dildeki ad",
+                    english: "İngilizce ad",
+                    native: "Yerel ad",
+                    parents: "Üst kültürler",
+                    none: "Yok",
+                    longDate: "Uzun tarih",
+                    shortDate: "Kısa tarih",
+                    longTime: "Uzun saat",
+                    currency: "Para birimi",
+                    currencyCode: "Para birimi kodu",
+                    currencySymbol: "Para birimi simgesi",
+                    amount: "Tutar",
+                    noCurrency: "Para birimi verisi yok.",
+                    notRecognized: "Tanınmadı.",
+                    noEntry: "Kayıt yok."
+                },
+                uk: {
+                    title: "Коди культур",
+                    sample: "Зразок: {fixed}",
+                    written: "Цією мовою: {local}",
+                    uiLang: "Мова",
+                    follow: "Як у браузері",
+                    query: "Код або назва",
+                    submit: "Знайти",
+                    name: "Назва цією мовою",
+                    english: "Англійська назва",
+                    native: "Місцева назва",
+                    parents: "Батьківські",
+                    none: "Немає",
+                    longDate: "Довга дата",
+                    shortDate: "Коротка дата",
+                    longTime: "Довгий час",
+                    currency: "Валюта",
+                    currencyCode: "Код валюти",
+                    currencySymbol: "Символ валюти",
+                    amount: "Сума",
+                    noCurrency: "Немає даних про валюту.",
+                    notRecognized: "Не розпізнано.",
+                    noEntry: "Немає запису."
+                },
+                sv: {
+                    title: "Kulturkoder",
+                    sample: "Exempel: {fixed}",
+                    written: "På det här språket: {local}",
+                    uiLang: "Språk",
+                    follow: "Följ webbläsaren",
+                    query: "Kod eller namn",
+                    submit: "Slå upp",
+                    name: "Namn på det här språket",
+                    english: "Engelskt namn",
+                    native: "Lokalt namn",
+                    parents: "Överordnade",
+                    none: "Inget",
+                    longDate: "Långt datum",
+                    shortDate: "Kort datum",
+                    longTime: "Lång tid",
+                    currency: "Valuta",
+                    currencyCode: "Valutakod",
+                    currencySymbol: "Valutasymbol",
+                    amount: "Belopp",
+                    noCurrency: "Inga valutadata.",
+                    notRecognized: "Känns inte igen.",
+                    noEntry: "Ingen post."
+                },
+                da: {
+                    title: "Kulturkoder",
+                    sample: "Eksempel: {fixed}",
+                    written: "På dette sprog: {local}",
+                    uiLang: "Sprog",
+                    follow: "Følg browseren",
+                    query: "Kode eller navn",
+                    submit: "Slå op",
+                    name: "Navn på dette sprog",
+                    english: "Engelsk navn",
+                    native: "Lokalt navn",
+                    parents: "Overordnede",
+                    none: "Ingen",
+                    longDate: "Lang dato",
+                    shortDate: "Kort dato",
+                    longTime: "Langt klokkeslæt",
+                    currency: "Valuta",
+                    currencyCode: "Valutakode",
+                    currencySymbol: "Valutasymbol",
+                    amount: "Beløb",
+                    noCurrency: "Ingen valutadata.",
+                    notRecognized: "Ikke genkendt.",
+                    noEntry: "Ingen post."
+                },
+                nb: {
+                    title: "Kulturkoder",
+                    sample: "Eksempel: {fixed}",
+                    written: "På dette språket: {local}",
+                    uiLang: "Språk",
+                    follow: "Følg nettleseren",
+                    query: "Kode eller navn",
+                    submit: "Slå opp",
+                    name: "Navn på dette språket",
+                    english: "Engelsk navn",
+                    native: "Lokalt navn",
+                    parents: "Overordnede",
+                    none: "Ingen",
+                    longDate: "Lang dato",
+                    shortDate: "Kort dato",
+                    longTime: "Langt klokkeslett",
+                    currency: "Valuta",
+                    currencyCode: "Valutakode",
+                    currencySymbol: "Valutasymbol",
+                    amount: "Beløp",
+                    noCurrency: "Ingen valutadata.",
+                    notRecognized: "Ikke gjenkjent.",
+                    noEntry: "Ingen oppføring."
+                },
+                fi: {
+                    title: "Kulttuurikoodit",
+                    sample: "Näyte: {fixed}",
+                    written: "Tällä kielellä: {local}",
+                    uiLang: "Kieli",
+                    follow: "Seuraa selainta",
+                    query: "Koodi tai nimi",
+                    submit: "Hae",
+                    name: "Nimi tällä kielellä",
+                    english: "Englanninkielinen nimi",
+                    native: "Paikallinen nimi",
+                    parents: "Yläkulttuurit",
+                    none: "Ei ole",
+                    longDate: "Pitkä päivämäärä",
+                    shortDate: "Lyhyt päivämäärä",
+                    longTime: "Pitkä kellonaika",
+                    currency: "Valuutta",
+                    currencyCode: "Valuuttakoodi",
+                    currencySymbol: "Valuuttasymboli",
+                    amount: "Summa",
+                    noCurrency: "Ei valuuttatietoja.",
+                    notRecognized: "Ei tunnistettu.",
+                    noEntry: "Ei hakutulosta."
+                },
+                cs: {
+                    title: "Kódy kultur",
+                    sample: "Ukázka: {fixed}",
+                    written: "V tomto jazyce: {local}",
+                    uiLang: "Jazyk",
+                    follow: "Podle prohlížeče",
+                    query: "Kód nebo název",
+                    submit: "Vyhledat",
+                    name: "Název v tomto jazyce",
+                    english: "Anglický název",
+                    native: "Místní název",
+                    parents: "Nadřazené",
+                    none: "Žádné",
+                    longDate: "Dlouhé datum",
+                    shortDate: "Krátké datum",
+                    longTime: "Dlouhý čas",
+                    currency: "Měna",
+                    currencyCode: "Kód měny",
+                    currencySymbol: "Symbol měny",
+                    amount: "Částka",
+                    noCurrency: "Žádná data o měně.",
+                    notRecognized: "Nerozpoznáno.",
+                    noEntry: "Žádná položka."
+                },
+                sk: {
+                    title: "Kódy kultúr",
+                    sample: "Ukážka: {fixed}",
+                    written: "V tomto jazyku: {local}",
+                    uiLang: "Jazyk",
+                    follow: "Podľa prehliadača",
+                    query: "Kód alebo názov",
+                    submit: "Vyhľadať",
+                    name: "Názov v tomto jazyku",
+                    english: "Anglický názov",
+                    native: "Miestny názov",
+                    parents: "Nadradené",
+                    none: "Žiadne",
+                    longDate: "Dlhý dátum",
+                    shortDate: "Krátky dátum",
+                    longTime: "Dlhý čas",
+                    currency: "Mena",
+                    currencyCode: "Kód meny",
+                    currencySymbol: "Symbol meny",
+                    amount: "Suma",
+                    noCurrency: "Žiadne údaje o mene.",
+                    notRecognized: "Nerozpoznané.",
+                    noEntry: "Žiadna položka."
+                },
+                hu: {
+                    title: "Kultúrakódok",
+                    sample: "Minta: {fixed}",
+                    written: "Ezen a nyelven: {local}",
+                    uiLang: "Nyelv",
+                    follow: "A böngésző szerint",
+                    query: "Kód vagy név",
+                    submit: "Keresés",
+                    name: "Név ezen a nyelven",
+                    english: "Angol név",
+                    native: "Helyi név",
+                    parents: "Fölérendelt",
+                    none: "Nincs",
+                    longDate: "Hosszú dátum",
+                    shortDate: "Rövid dátum",
+                    longTime: "Hosszú idő",
+                    currency: "Pénznem",
+                    currencyCode: "Pénznemkód",
+                    currencySymbol: "Pénznemjel",
+                    amount: "Összeg",
+                    noCurrency: "Nincs pénznemadat.",
+                    notRecognized: "Nem ismerhető fel.",
+                    noEntry: "Nincs találat."
+                },
+                ro: {
+                    title: "Coduri de cultură",
+                    sample: "Exemplu: {fixed}",
+                    written: "În această limbă: {local}",
+                    uiLang: "Limbă",
+                    follow: "Urmează browserul",
+                    query: "Cod sau nume",
+                    submit: "Caută",
+                    name: "Numele în această limbă",
+                    english: "Numele în engleză",
+                    native: "Numele local",
+                    parents: "Părinte",
+                    none: "Niciunul",
+                    longDate: "Dată lungă",
+                    shortDate: "Dată scurtă",
+                    longTime: "Oră lungă",
+                    currency: "Monedă",
+                    currencyCode: "Cod monedă",
+                    currencySymbol: "Simbol monedă",
+                    amount: "Sumă",
+                    noCurrency: "Nu există date despre monedă.",
+                    notRecognized: "Nu este recunoscut.",
+                    noEntry: "Nicio intrare."
+                },
+                el: {
+                    title: "Κωδικοί πολιτισμού",
+                    sample: "Δείγμα: {fixed}",
+                    written: "Σε αυτή τη γλώσσα: {local}",
+                    uiLang: "Γλώσσα",
+                    follow: "Ακολουθήστε το πρόγραμμα περιήγησης",
+                    query: "Κωδικός ή όνομα",
+                    submit: "Αναζήτηση",
+                    name: "Όνομα σε αυτή τη γλώσσα",
+                    english: "Αγγλικό όνομα",
+                    native: "Τοπικό όνομα",
+                    parents: "Γονικές",
+                    none: "Κανένα",
+                    longDate: "Πλήρης ημερομηνία",
+                    shortDate: "Σύντομη ημερομηνία",
+                    longTime: "Πλήρης ώρα",
+                    currency: "Νόμισμα",
+                    currencyCode: "Κωδικός νομίσματος",
+                    currencySymbol: "Σύμβολο νομίσματος",
+                    amount: "Ποσό",
+                    noCurrency: "Δεν υπάρχουν δεδομένα νομίσματος.",
+                    notRecognized: "Δεν αναγνωρίζεται.",
+                    noEntry: "Δεν υπάρχει καταχώριση."
+                },
+                bg: {
+                    title: "Кодове на култура",
+                    sample: "Образец: {fixed}",
+                    written: "На този език: {local}",
+                    uiLang: "Език",
+                    follow: "Следвай браузъра",
+                    query: "Код или име",
+                    submit: "Търсене",
+                    name: "Име на този език",
+                    english: "Име на английски",
+                    native: "Местно име",
+                    parents: "Родителски",
+                    none: "Няма",
+                    longDate: "Дълга дата",
+                    shortDate: "Кратка дата",
+                    longTime: "Дълго време",
+                    currency: "Валута",
+                    currencyCode: "Код на валута",
+                    currencySymbol: "Символ на валута",
+                    amount: "Сума",
+                    noCurrency: "Няма данни за валута.",
+                    notRecognized: "Не е разпознато.",
+                    noEntry: "Няма запис."
+                },
+                hr: {
+                    title: "Kodovi kulture",
+                    sample: "Uzorak: {fixed}",
+                    written: "Na ovom jeziku: {local}",
+                    uiLang: "Jezik",
+                    follow: "Slijedi preglednik",
+                    query: "Kod ili naziv",
+                    submit: "Potraži",
+                    name: "Naziv na ovom jeziku",
+                    english: "Engleski naziv",
+                    native: "Lokalni naziv",
+                    parents: "Nadređeni",
+                    none: "Nema",
+                    longDate: "Dugi datum",
+                    shortDate: "Kratki datum",
+                    longTime: "Dugo vrijeme",
+                    currency: "Valuta",
+                    currencyCode: "Kod valute",
+                    currencySymbol: "Simbol valute",
+                    amount: "Iznos",
+                    noCurrency: "Nema podataka o valuti.",
+                    notRecognized: "Nije prepoznato.",
+                    noEntry: "Nema unosa."
+                },
+                sl: {
+                    title: "Kode kultur",
+                    sample: "Vzorec: {fixed}",
+                    written: "V tem jeziku: {local}",
+                    uiLang: "Jezik",
+                    follow: "Sledi brskalniku",
+                    query: "Koda ali ime",
+                    submit: "Poišči",
+                    name: "Ime v tem jeziku",
+                    english: "Angleško ime",
+                    native: "Lokalno ime",
+                    parents: "Nadrejene",
+                    none: "Nobena",
+                    longDate: "Dolgi datum",
+                    shortDate: "Kratki datum",
+                    longTime: "Dolgi čas",
+                    currency: "Valuta",
+                    currencyCode: "Koda valute",
+                    currencySymbol: "Simbol valute",
+                    amount: "Znesek",
+                    noCurrency: "Ni podatkov o valuti.",
+                    notRecognized: "Ni prepoznano.",
+                    noEntry: "Ni vnosa."
+                },
+                lt: {
+                    title: "Kultūros kodai",
+                    sample: "Pavyzdys: {fixed}",
+                    written: "Šia kalba: {local}",
+                    uiLang: "Kalba",
+                    follow: "Pagal naršyklę",
+                    query: "Kodas arba pavadinimas",
+                    submit: "Ieškoti",
+                    name: "Pavadinimas šia kalba",
+                    english: "Angliškas pavadinimas",
+                    native: "Vietinis pavadinimas",
+                    parents: "Pirminės",
+                    none: "Nėra",
+                    longDate: "Ilga data",
+                    shortDate: "Trumpa data",
+                    longTime: "Ilgas laikas",
+                    currency: "Valiuta",
+                    currencyCode: "Valiutos kodas",
+                    currencySymbol: "Valiutos simbolis",
+                    amount: "Suma",
+                    noCurrency: "Nėra valiutos duomenų.",
+                    notRecognized: "Neatpažinta.",
+                    noEntry: "Nėra įrašo."
+                },
+                lv: {
+                    title: "Kultūras kodi",
+                    sample: "Paraugs: {fixed}",
+                    written: "Šajā valodā: {local}",
+                    uiLang: "Valoda",
+                    follow: "Sekot pārlūkam",
+                    query: "Kods vai nosaukums",
+                    submit: "Meklēt",
+                    name: "Nosaukums šajā valodā",
+                    english: "Nosaukums angļu valodā",
+                    native: "Vietējais nosaukums",
+                    parents: "Vecāki",
+                    none: "Nav",
+                    longDate: "Garais datums",
+                    shortDate: "Īsais datums",
+                    longTime: "Garais laiks",
+                    currency: "Valūta",
+                    currencyCode: "Valūtas kods",
+                    currencySymbol: "Valūtas simbols",
+                    amount: "Summa",
+                    noCurrency: "Nav valūtas datu.",
+                    notRecognized: "Nav atpazīts.",
+                    noEntry: "Nav ieraksta."
+                },
+                et: {
+                    title: "Kultuurikoodid",
+                    sample: "Näidis: {fixed}",
+                    written: "Selles keeles: {local}",
+                    uiLang: "Keel",
+                    follow: "Järgi brauserit",
+                    query: "Kood või nimi",
+                    submit: "Otsi",
+                    name: "Nimi selles keeles",
+                    english: "Ingliskeelne nimi",
+                    native: "Kohalik nimi",
+                    parents: "Ülemad",
+                    none: "Puudub",
+                    longDate: "Pikk kuupäev",
+                    shortDate: "Lühike kuupäev",
+                    longTime: "Pikk kellaaeg",
+                    currency: "Valuuta",
+                    currencyCode: "Valuutakood",
+                    currencySymbol: "Valuutasümbol",
+                    amount: "Summa",
+                    noCurrency: "Valuutaandmed puuduvad.",
+                    notRecognized: "Ei tuvastatud.",
+                    noEntry: "Kirjet pole."
+                },
+                ca: {
+                    title: "Codis de cultura",
+                    sample: "Exemple: {fixed}",
+                    written: "En aquesta llengua: {local}",
+                    uiLang: "Llengua",
+                    follow: "Segueix el navegador",
+                    query: "Codi o nom",
+                    submit: "Cerca",
+                    name: "Nom en aquesta llengua",
+                    english: "Nom en anglès",
+                    native: "Nom local",
+                    parents: "Superiors",
+                    none: "Cap",
+                    longDate: "Data llarga",
+                    shortDate: "Data curta",
+                    longTime: "Hora llarga",
+                    currency: "Moneda",
+                    currencyCode: "Codi de moneda",
+                    currencySymbol: "Símbol de moneda",
+                    amount: "Import",
+                    noCurrency: "No hi ha dades de moneda.",
+                    notRecognized: "No reconegut.",
+                    noEntry: "Cap entrada."
+                }
+            };
+
+            Object.keys(MESSAGES).forEach(function (id) {
+                if (id === "en") return;
+                Object.keys(MESSAGES.en).forEach(function (key) {
+                    if (MESSAGES[id][key] == null) MESSAGES[id][key] = MESSAGES.en[key];
+                });
+            });
+
+            function recognize(tag) {
+                var loc;
+                try { loc = new Intl.Locale(tag); }
+                catch (e) { return null; }
+                var base = loc.baseName;
+                if (!Intl.DateTimeFormat.supportedLocalesOf([base]).length) return null;
+                var resolved = new Intl.DateTimeFormat(base, { timeZone: "UTC" }).resolvedOptions().locale;
+                var got;
+                try { got = new Intl.Locale(resolved); }
+                catch (e) { return null; }
+                if (got.language !== loc.language) return null;
+                if (loc.region && got.region !== loc.region) return null;
+                if (loc.script && got.script && got.script !== loc.script) return null;
+                return loc;
+            }
+
+            function parentsOf(base) {
+                if (PARENT[base]) return PARENT[base].slice();
+                var parts = base.split("-");
+                var chain = [];
+                while (parts.length > 1) {
+                    parts.pop();
+                    chain.push(parts.join("-"));
+                }
+                return chain;
+            }
+
+            function displayName(locale, of) {
+                return new Intl.DisplayNames([locale], {
+                    type: "language",
+                    languageDisplay: "standard"
+                }).of(of);
+            }
+
+            function safeName(locale, of) {
+                try { return displayName(locale, of); }
+                catch (e) { return of; }
+            }
+
+            function packFor(tag) {
+                var loc;
+                try { loc = new Intl.Locale(tag); }
+                catch (e) { return "en"; }
+                if (loc.language === "zh") {
+                    var script = loc.script || "";
+                    var region = loc.region || "";
+                    if (script === "Hant" || region === "TW" || region === "HK" || region === "MO") return "zh-Hant";
+                    if (parentsOf(loc.baseName).indexOf("zh-Hant") !== -1) return "zh-Hant";
+                    return "zh-Hans";
+                }
+                return MESSAGES[loc.language] ? loc.language : "en";
+            }
+
+            function textDir(tag) {
+                try {
+                    var loc = new Intl.Locale(tag);
+                    var info = null;
+                    if (typeof loc.getTextInfo === "function") info = loc.getTextInfo();
+                    else if (loc.textInfo) info = loc.textInfo;
+                    if (info && (info.direction === "rtl" || info.direction === "ltr")) return info.direction;
+                } catch (e) { /* use the short list below */ }
+                var lang = String(tag || "").split("-")[0].toLowerCase();
+                if (lang === "ar" || lang === "he" || lang === "fa" || lang === "ur" || lang === "yi" || lang === "dv" || lang === "ps") return "rtl";
+                return "ltr";
+            }
+
+            var AVAILABLE = [];
+            var TABLE = [];
+            CODES.forEach(function (code) {
+                var loc = recognize(code);
+                if (!loc) return;
+                var base = loc.baseName;
+                if (AVAILABLE.indexOf(base) === -1) AVAILABLE.push(base);
+                TABLE.push({
+                    code: base,
+                    english: safeName("en", base),
+                    native: safeName(base, base)
+                });
+            });
+
+            var uiTag = "en";
+            var pref = "";
+            var nameCacheTag = "";
+            var nameCache = null;
+            var lastQuery = "";
+
+            function t(key, vars) {
+                var pack = MESSAGES[packFor(uiTag)] || MESSAGES.en;
+                var text = pack[key];
+                if (text == null) text = MESSAGES.en[key];
+                if (text == null) text = key;
+                if (vars) {
+                    Object.keys(vars).forEach(function (name) {
+                        text = text.split("{" + name + "}").join(String(vars[name]));
+                    });
+                }
+                return text;
+            }
+
+            function fold(value) {
+                return String(value || "").normalize("NFD").replace(/\p{M}/gu, "").toLocaleLowerCase("en");
+            }
+
+            function asCode(input) {
+                if (/^[A-Za-z]{2,3}$/.test(input)) return input;
+                if (/^[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8})+$/.test(input)) return input;
+                if (/[_-]/.test(input) && /^[A-Za-z0-9_-]+$/.test(input)) return input;
+                return null;
+            }
+
+            function extraNameLocales(tag) {
+                var list = [tag];
+                var pack = packFor(tag);
+                if (list.indexOf(pack) === -1 && recognize(pack)) list.push(pack);
+                if (pack === "zh-Hans" || pack === "zh-Hant") {
+                    if (list.indexOf("zh-Hans") === -1) list.push("zh-Hans");
+                    if (list.indexOf("zh-Hant") === -1) list.push("zh-Hant");
+                }
+                return list;
+            }
+
+            function namesForUi() {
+                if (nameCacheTag === uiTag && nameCache) return nameCache;
+                var locales = extraNameLocales(uiTag);
+                nameCache = {};
+                TABLE.forEach(function (row) {
+                    var names = [];
+                    locales.forEach(function (locale) {
+                        var name = safeName(locale, row.code);
+                        if (name && names.indexOf(name) === -1) names.push(name);
+                    });
+                    nameCache[row.code] = names;
+                });
+                nameCacheTag = uiTag;
+                return nameCache;
+            }
+
+            function rankName(name, query) {
+                if (!name) return 0;
+                var folded = fold(name);
+                if (!folded) return 0;
+                if (folded === query) return 3;
+                if (folded.indexOf(query) === 0) return 2;
+                if (folded.indexOf(query) > 0) return 1;
+                return 0;
+            }
+
+            function searchNames(input) {
+                var query = fold(input);
+                var exact = [];
+                var prefix = [];
+                var contains = [];
+                var extras = namesForUi();
+                TABLE.forEach(function (row) {
+                    var fields = [row.english, row.native].concat(extras[row.code] || []);
+                    var rank = 0;
+                    fields.forEach(function (field) {
+                        var next = rankName(field, query);
+                        if (next > rank) rank = next;
+                    });
+                    if (rank === 3) exact.push(row.code);
+                    else if (rank === 2) prefix.push(row.code);
+                    else if (rank === 1) contains.push(row.code);
+                });
+                return exact.concat(prefix, contains);
+            }
+
+            function currencyOf(loc) {
+                if (!loc.region || !CURRENCY[loc.region]) return null;
+                var iso = CURRENCY[loc.region];
+                var fmt = new Intl.NumberFormat(loc.baseName, { style: "currency", currency: iso });
+                var symbol = "";
+                fmt.formatToParts(AMOUNT).forEach(function (part) {
+                    if (part.type === "currency") symbol += part.value;
+                });
+                return { iso: iso, symbol: symbol, amount: fmt.format(AMOUNT) };
+            }
+
+            function datesOf(base) {
+                return {
+                    longDate: new Intl.DateTimeFormat(base, { dateStyle: "full", timeZone: "UTC" }).format(SAMPLE),
+                    shortDate: new Intl.DateTimeFormat(base, { dateStyle: "short", timeZone: "UTC" }).format(SAMPLE),
+                    longTime: new Intl.DateTimeFormat(base, { timeStyle: "long", timeZone: "UTC" }).format(SAMPLE)
+                };
+            }
+
+            function localSample(tag) {
+                var when;
+                try {
+                    when = new Intl.DateTimeFormat(tag, {
+                        dateStyle: "full",
+                        timeStyle: "long",
+                        timeZone: "UTC"
+                    }).format(SAMPLE);
+                } catch (e) {
+                    var day = new Intl.DateTimeFormat(tag, { dateStyle: "full", timeZone: "UTC" }).format(SAMPLE);
+                    var clock = new Intl.DateTimeFormat(tag, { timeStyle: "long", timeZone: "UTC" }).format(SAMPLE);
+                    when = day + " " + clock;
+                }
+                return when + " · " + new Intl.NumberFormat(tag).format(AMOUNT);
+            }
+
+            function el(tag, className, text) {
+                var node = document.createElement(tag);
+                if (className) node.className = className;
+                if (text != null) node.textContent = text;
+                return node;
+            }
+
+            function addRow(dl, label, value, ltr) {
+                dl.appendChild(el("dt", "", label));
+                var dd = el("dd");
+                var island = el("bdi", "", value);
+                if (ltr) island.dir = "ltr";
+                dd.appendChild(island);
+                dl.appendChild(dd);
+            }
+
+            function card(base) {
+                var loc = recognize(base);
+                var article = el("article", "card");
+                var heading = el("h2");
+                heading.appendChild(el("bdi", "", loc ? loc.baseName : base));
+                heading.firstChild.dir = "ltr";
+                article.appendChild(heading);
+                if (!loc) {
+                    article.appendChild(el("p", "miss", t("notRecognized")));
+                    return article;
+                }
+                var chain = parentsOf(loc.baseName);
+                var dates = datesOf(loc.baseName);
+                var money = currencyOf(loc);
+                var english = safeName("en", loc.baseName);
+                var native = safeName(loc.baseName, loc.baseName);
+                var inUi = safeName(uiTag, loc.baseName);
+                var dl = el("dl");
+                if (inUi && inUi !== english && inUi !== native) addRow(dl, t("name"), inUi, false);
+                addRow(dl, t("english"), english, false);
+                addRow(dl, t("native"), native, false);
+                addRow(dl, t("parents"), chain.length ? chain.join(" → ") : t("none"), !!chain.length);
+                addRow(dl, t("longDate"), dates.longDate, false);
+                addRow(dl, t("shortDate"), dates.shortDate, false);
+                addRow(dl, t("longTime"), dates.longTime, false);
+                if (money) {
+                    addRow(dl, t("currencyCode"), money.iso, true);
+                    addRow(dl, t("currencySymbol"), money.symbol, false);
+                    addRow(dl, t("amount"), money.amount, false);
+                } else {
+                    addRow(dl, t("currency"), t("noCurrency"), false);
+                }
+                article.appendChild(dl);
+                return article;
+            }
+
+            var out = document.getElementById("out");
+            var sampleLine = document.getElementById("sample-line");
+            var writtenLine = document.getElementById("written-line");
+            var uiSelect = document.getElementById("ui");
+            var followOpt = el("option", "", "");
+            followOpt.value = "";
+            uiSelect.appendChild(followOpt);
+            AVAILABLE.forEach(function (code) {
+                var opt = el("option");
+                opt.value = code;
+                var native = safeName(code, code);
+                opt.textContent = native && native !== code ? native + " · " + code : code;
+                uiSelect.appendChild(opt);
+            });
+
+            function showMiss(text) {
+                out.textContent = "";
+                out.appendChild(el("p", "miss", text));
+            }
+
+            function show(input) {
+                var code = asCode(input);
+                if (code) {
+                    var loc = recognize(code);
+                    out.textContent = "";
+                    if (!loc) {
+                        showMiss(t("notRecognized"));
+                        return;
+                    }
+                    out.appendChild(card(loc.baseName));
+                    return;
+                }
+                var hits = searchNames(input);
+                out.textContent = "";
+                if (!hits.length) {
+                    showMiss(t("noEntry"));
+                    return;
+                }
+                hits.forEach(function (hit) { out.appendChild(card(hit)); });
+            }
+
+            function setLine(node, key, token, value, dir) {
+                node.textContent = "";
+                var parts = t(key).split("{" + token + "}");
+                node.appendChild(document.createTextNode(parts[0] || ""));
+                var island = el("bdi", "", value);
+                island.dir = dir;
+                node.appendChild(island);
+                if (parts.length > 1) node.appendChild(document.createTextNode(parts.slice(1).join("{" + token + "}")));
+            }
+
+            function applyChrome() {
+                var root = document.documentElement;
+                root.lang = uiTag;
+                root.dir = textDir(uiTag);
+                document.title = t("title");
+                document.querySelectorAll("[data-msg]").forEach(function (node) {
+                    node.textContent = t(node.getAttribute("data-msg"));
+                });
+                followOpt.textContent = t("follow");
+                uiSelect.value = pref;
+                setLine(sampleLine, "sample", "fixed", FIXED, "ltr");
+                setLine(writtenLine, "written", "local", localSample(uiTag), "auto");
+            }
+
+            function canonAvailable(tag) {
+                if (!tag) return "";
+                var loc = recognize(tag);
+                if (!loc) return "";
+                return AVAILABLE.indexOf(loc.baseName) === -1 ? "" : loc.baseName;
+            }
+
+            function resolveBrowser() {
+                var list = [];
+                if (navigator.languages) {
+                    for (var i = 0; i < navigator.languages.length; i++) list.push(navigator.languages[i]);
+                }
+                if (navigator.language) list.push(navigator.language);
+                for (var j = 0; j < list.length; j++) {
+                    var loc = recognize(list[j]);
+                    if (loc) return loc.baseName;
+                }
+                return "en";
+            }
+
+            function readStored() {
+                try { return localStorage.getItem(STORE); }
+                catch (e) { return null; }
+            }
+
+            function writeStored(value) {
+                try {
+                    if (value) localStorage.setItem(STORE, value);
+                    else localStorage.removeItem(STORE);
+                } catch (e) { /* private mode */ }
+            }
+
+            function writeLangParam(tag) {
+                try {
+                    var url = new URL(location.href);
+                    if (tag) url.searchParams.set("lang", tag);
+                    else url.searchParams.delete("lang");
+                    history.replaceState(null, "", url.pathname + url.search + url.hash);
+                } catch (e) { /* leave the address */ }
+            }
+
+            function readLangParam() {
+                try { return new URL(location.href).searchParams.get("lang"); }
+                catch (e) { return null; }
+            }
+
+            var param = readLangParam();
+            var fromUrl = param ? canonAvailable(param) : "";
+            if (fromUrl) {
+                pref = fromUrl;
+                if (param !== fromUrl) writeLangParam(fromUrl);
+            } else {
+                if (param) writeLangParam("");
+                var stored = readStored();
+                var fromStore = stored ? canonAvailable(stored) : "";
+                if (fromStore) pref = fromStore;
+            }
+            uiTag = pref || resolveBrowser();
+            applyChrome();
+
+            uiSelect.addEventListener("change", function () {
+                var next = uiSelect.value ? canonAvailable(uiSelect.value) : "";
+                if (uiSelect.value && !next) {
+                    uiSelect.value = pref;
+                    return;
+                }
+                pref = next;
+                uiTag = pref || resolveBrowser();
+                nameCache = null;
+                nameCacheTag = "";
+                writeStored(pref);
+                writeLangParam(pref);
+                applyChrome();
+                if (lastQuery) show(lastQuery);
+            });
+
+            document.getElementById("lookup").addEventListener("submit", function (event) {
+                event.preventDefault();
+                var input = document.getElementById("q").value.trim();
+                lastQuery = input;
+                if (!input) {
+                    out.textContent = "";
+                    return;
+                }
+                show(input);
+            });
+        })();
+    </script>
+    <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "241bef231e1a4259b9d2c455c3a631e1"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
