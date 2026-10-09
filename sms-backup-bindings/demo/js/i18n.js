@@ -1,8 +1,8 @@
 /* UI chrome strings only — ledger content stays as-is in JSON */
 window.DemoI18n = (function () {
   const PLAY = "https://play.google.com/store/apps/details?id=com.luminaera.phonebindtracker";
-  /** Flip to true after the Play listing is live. The gate link then opens PLAY. */
-  const PLAY_LIVE = false;
+  /** Play listing is live — gate CTA opens PLAY. Set false only to re-block. */
+  const PLAY_LIVE = true;
 
   const packs = {
     "en": {
