@@ -174,6 +174,7 @@
     const dx = e.clientX - drag.sx, dy = e.clientY - drag.sy;
     if (!moved && Math.hypot(dx, dy) < DRAG_PX) return;
     moved = true;
+    userPlaced = true;
     fab.classList.add("dragging");
     place(drag.ox + dx, drag.oy + dy);
   });
@@ -189,7 +190,17 @@
     open();
   });
   $("fb-hide").addEventListener("click", (e) => { e.stopPropagation(); fab.classList.add("hidden"); close(); });
+  let userPlaced = false;
+  /* Initial spot: straddle the phone screen's right edge, ~30% down (viewport-fixed, clamped). */
+  function initialPlace() {
+    const phone = document.getElementById("phone");
+    if (!phone) return;
+    const pr = phone.getBoundingClientRect();
+    const fr = fab.getBoundingClientRect();
+    place(pr.right - fr.width * 0.6, pr.top + pr.height * 0.3);
+  }
   window.addEventListener("resize", () => {
+    if (!userPlaced) { initialPlace(); return; }
     if (!fab.style.left) return;
     const r = fab.getBoundingClientRect();
     place(r.left, r.top);
@@ -197,5 +208,6 @@
 
   function show() { fab.classList.remove("hidden"); }
   relabel();
+  requestAnimationFrame(initialPlace);
   window.DemoSurvey = { relabel, show };
 })();
