@@ -630,8 +630,8 @@
   }
 
   function navRecents() {
-    if (!state.gated) { showToast(t("nav_recents")); return; }
-    showToast(t("nav_recents"));
+    /* Recents key had no real action; it now behaves like Home (reload → first screen, survey entry back). */
+    navHome();
   }
 
   function needsPinGate() {
@@ -2653,6 +2653,7 @@
   }
 
   function render() {
+    if (window.DemoSurvey) window.DemoSurvey.relabel();
     renderDemoBar();
     renderGate();
     if (!state.gated) { $("#phone-body").innerHTML = ""; renderModal(); return; }
